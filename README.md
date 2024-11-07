@@ -4,4 +4,4 @@ permalink: "/about/"
 layout: page
 ---
 
-This is a cybersecurity blog to track my reasearch and journy, enjoy!
+This is a blog to track my cybersecurity reasearch and journey, enjoy!
