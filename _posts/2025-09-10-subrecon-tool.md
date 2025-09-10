@@ -1,17 +1,20 @@
 ---
+title:  "Introducing Subrecon"
+mathjax: true
 layout: post
-title: "Introducing Subrecon"
-date: 2025-09-10
-categories: tools reconnaissance
-tags: subdomains recon bugbounty
+categories: media
 ---
 
 I’ve been working on a new tool called **Subrecon**, a lightweight and fast subdomain reconnaissance utility.  
+
+<!--more-->
 
 ### Features
 - Enumerates subdomains using multiple sources  
 - Filters and deduplicates results  
 - Exports clean lists ready for pentesting  
+
+![Subrecon Demo](/assets/images/subrecon-demo.png)
 
 ### Why I built it
 Subdomain enumeration is one of the first steps in recon, but most tools are either too slow or overly complex. I wanted something simple that just works.  
