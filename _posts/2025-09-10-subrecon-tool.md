@@ -14,7 +14,7 @@ I’ve been working on a new tool called **Subrecon**, a lightweight and fast su
 - Filters and deduplicates results  
 - Exports clean lists ready for pentesting  
 
-![Subrecon Demo](/assets/images/subrecon-demo.png)
+[![Subrecon Demo](/assets/images/subrecon-demo.png)](/assets/images/subrecon-demo.png){:target="_blank"}
 
 ### Why I built it
 Subdomain enumeration is one of the first steps in recon, but most tools are either too slow or overly complex. I wanted something simple that just works.  
