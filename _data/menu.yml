@@ -1,4 +1,11 @@
-- title: Home
-  url: /
-- title: About
-  url: /about/
+entries:
+  - title: Home
+    url: /
+  - title: About
+    url: /about/
+  - title: Posts
+    post_list:
+      limit: 10
+      show_more: true
+      show_more_url: /archive/
+      show_more_text: See all posts →
