@@ -1,8 +1,6 @@
 entries:
   - title: Home
     url: /
-  - title: About
-    url: /about/
   - title: Posts
     post_list:
       limit: 10
