@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Tab title: use page.title if present, else site.title -->
     <title>{{ page.title | default: site.title }}</title>
 
     <!-- Favicon / icons -->
@@ -16,6 +15,11 @@
 
     <!-- Your CSS -->
     <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+
+    <!-- Quick background fallback to soft white -->
+    <style>
+      body { background: #f9f9f8; color: #111; }
+    </style>
   </head>
   <body>
     <main class="page-content" aria-label="Content">
