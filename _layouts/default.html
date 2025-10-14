@@ -1,0 +1,25 @@
+---
+---
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Tab title: use page.title if present, else site.title -->
+    <title>{{ page.title | default: site.title }}</title>
+
+    <!-- Favicon / icons -->
+    <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="any">
+    <link rel="icon" type="image/png" href="{{ '/favicon.ico' | relative_url }}">
+    <link rel="apple-touch-icon" href="{{ '/favicon.ico' | relative_url }}">
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  </head>
+  <body>
+    <main class="page-content" aria-label="Content">
+      {{ content }}
+    </main>
+  </body>
+</html>
