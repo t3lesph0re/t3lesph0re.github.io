@@ -10,8 +10,15 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a { color: #0044cc; text-decoration: none; }
-a:hover { text-decoration: underline; }
+a {
+  color: #2a6f97;  /* soft blue-green, easy on eyes */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #014f86;  /* darker shade for hover */
+  text-decoration: underline;
+}
 
 /* Optional dark-mode auto */
 @media (prefers-color-scheme: dark) {
@@ -87,3 +94,19 @@ figcaption { font-size: .9rem; opacity: .75; margin-top: .25rem; }
 ----------------------------*/
 /* Hide the raw timestamp/metadata line some layouts render */
 time, .post-meta { display: none !important; }
+
+/* back to home link */
+.back-home {
+  margin-bottom: 1.2rem;
+}
+
+.back-home a {
+  font-size: 0.95rem;
+  color: #2a6f97;
+  opacity: 0.85;
+}
+
+.back-home a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
