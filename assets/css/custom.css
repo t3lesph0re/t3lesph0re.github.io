@@ -1,113 +1,59 @@
-/* ---------------------------
-   Base / colors / typography
-----------------------------*/
-body {
-  background-color: #f9f9f8;       /* soft off-white */
-  color: #111;                      /* dark gray, easier than pure black */
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+/* ===== Base ===== */
+body{
+  background:#f9f9f8;      /* soft off-white */
+  color:#111;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+@media (prefers-color-scheme:dark){
+  body{background:#0e0e0e;color:#ddd}
 }
 
-a {
-  color: #3366cc;          /* soft, modern blue */
-  text-decoration: none;
-  transition: color 0.2s ease;
+/* Links (kill orange) */
+a,.post a,.page a,.postList a,.wrap a{
+  color:#3366cc !important;              /* soft blue */
+  text-decoration:none;
+  transition:color .2s ease;
+}
+a:hover,.post a:hover,.page a:hover,.postList a:hover,.wrap a:hover{
+  color:#1a4f8a !important;
+  text-decoration:underline;
+}
+a:visited,.post a:visited,.page a:visited,.postList a:visited,.wrap a:visited{
+  color:#285a9e !important;
 }
 
-a:hover {
-  color: #1a4f8a;          /* darker hover */
-  text-decoration: underline;
+/* ===== Layout ===== */
+.wrap{max-width:720px;margin:0 auto;padding:1rem}
+.page,.post{max-width:720px;margin:0 auto;padding:0 1rem}   /* no boxed card */
+
+/* Home header */
+.site-header{text-align:center;margin:2rem 0 1.25rem}
+.site-header h1{margin:0 0 .25rem}
+.site-tagline{margin:0;opacity:.8}
+
+/* Home post list (date + title) */
+.postList{list-style:none;padding:0;margin:1.5rem auto;width:fit-content}
+.postList li{display:flex;gap:16px;margin:.35rem 0}
+.postList li span{width:80px;text-align:right;flex-shrink:0;opacity:.7}
+@media (max-width:480px){
+  .postList li{gap:10px}
+  .postList li span{width:64px;font-size:.95rem}
 }
 
-/* Optional dark-mode auto */
-@media (prefers-color-scheme: dark) {
-  body { background: #0e0e0e; color: #ddd; }
+/* Images */
+.post img,.page img,figure img{
+  max-width:100%;height:auto;display:block;margin:1rem auto
 }
+figure{margin:1.25rem auto;text-align:center}
+figcaption{font-size:.9rem;opacity:.75;margin-top:.25rem}
 
-/* ---------------------------
-   Layout containers
-----------------------------*/
-.wrap {                   /* used on the custom home page */
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 1rem;
-}
+/* Meta cleanup (hide raw timestamps some layouts emit) */
+time,.post-meta{display:none !important}
 
-.page, .post {           /* regular pages and posts */
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-}
-
-@media (prefers-color-scheme: dark) {
-  .page, .post { background: #181818; box-shadow: none; }
-}
-
-/* Header on home */
-.site-header { text-align: center; margin: 2rem 0 1.25rem; }
-.site-header h1 { margin: 0 0 .25rem; }
-.site-tagline { margin: 0; opacity: .8; }
-
-/* ---------------------------
-   Home post list (date + title)
-----------------------------*/
-.postList {
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem auto;
-  width: fit-content;
-}
-.postList li {
-  display: flex;
-  gap: 16px;
-  margin: .35rem 0;
-}
-.postList li span {
-  width: 80px;
-  text-align: right;
-  flex-shrink: 0;
-  opacity: .7;
-}
-@media (max-width: 480px) {
-  .postList li { gap: 10px; }
-  .postList li span { width: 64px; font-size: .95rem; }
-}
-
-/* ---------------------------
-   Images / figures
-----------------------------*/
-.post img, .page img, figure img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-}
-figure { margin: 1.25rem auto; text-align: center; }
-figcaption { font-size: .9rem; opacity: .75; margin-top: .25rem; }
-
-/* ---------------------------
-   Meta cleanup
-----------------------------*/
-/* Hide the raw timestamp/metadata line some layouts render */
-time, .post-meta { display: none !important; }
-
-/* back to home link */
-.post-nav {
-  margin-bottom: 1.5rem;
-}
-
-.post-nav a {
-  font-size: 0.95rem;
-  color: #3366cc;
-  opacity: 0.85;
-}
-
-.post-nav a:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
+/* Back-to-home link (requires _layouts/post.html nav) */
+.post-nav{margin:.25rem 0 1.25rem}
+.post-nav a{opacity:.9}
+.post-nav a:hover{opacity:1;text-decoration:underline}
