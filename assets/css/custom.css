@@ -1,3 +1,11 @@
+/* Force global accent and visited colors used by no-style-please */
+:root {
+  --accent: #3366cc !important;
+  --accent-visited: #285a9e !important;
+  --text-color: #111 !important;
+  --bg: #f9f9f8 !important;
+}
+
 /* ===== Base ===== */
 body{
   background:#f9f9f8;      /* soft off-white */
@@ -57,3 +65,24 @@ time,.post-meta{display:none !important}
 .post-nav{margin:.25rem 0 1.25rem}
 .post-nav a{opacity:.9}
 .post-nav a:hover{opacity:1;text-decoration:underline}
+
+/* code blocks */
+pre, code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: #f4f4f4;
+  color: #222;
+  border-radius: 6px;
+}
+
+pre {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+code {
+  padding: 0.2rem 0.4rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  pre, code { background: #1e1e1e; color: #ddd; }
+}
