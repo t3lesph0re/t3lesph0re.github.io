@@ -7,4 +7,7 @@ lang: "en"
 plugins:
   - jekyll-remote-theme
 
+sass:
+  style: compressed
+
 remote_theme: riggraz/no-style-please

@@ -1,0 +1,24 @@
+body {
+  background: #ffffff;
+  color: #000000;
+}
+a { color: #0055ff; }
+
+.post img,
+.page img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+figure {
+  margin: 1.5rem auto;
+  text-align: center;
+}
+
+figcaption {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.3rem;
+}
