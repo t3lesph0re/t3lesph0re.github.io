@@ -11,12 +11,13 @@ body {
 }
 
 a {
-  color: #2a6f97;  /* soft blue-green, easy on eyes */
+  color: #3366cc;          /* soft, modern blue */
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  color: #014f86;  /* darker shade for hover */
+  color: #1a4f8a;          /* darker hover */
   text-decoration: underline;
 }
 
@@ -96,17 +97,17 @@ figcaption { font-size: .9rem; opacity: .75; margin-top: .25rem; }
 time, .post-meta { display: none !important; }
 
 /* back to home link */
-.back-home {
-  margin-bottom: 1.2rem;
+.post-nav {
+  margin-bottom: 1.5rem;
 }
 
-.back-home a {
+.post-nav a {
   font-size: 0.95rem;
-  color: #2a6f97;
+  color: #3366cc;
   opacity: 0.85;
 }
 
-.back-home a:hover {
+.post-nav a:hover {
   opacity: 1;
   text-decoration: underline;
 }
