@@ -139,13 +139,18 @@ while i<len(p):
 sock.close()
 ```
 
-Once you have updated this script, we will need 3 seperate terminals: Python HTTP server, listener, and the exploit script. 
+Once you have updated this script (I downloaded it as it s defauly file name `36025`), we will need 3 seperate terminals: Python HTTP server, listener, and the exploit script. 
 
 1. Start the HTTP python server:
+
+<pre><code>  
 
 ```bash
 t3lesph0re@neptune:~$ python3 -m http.server 80
 ```
+
+</code></pre>
+
 
 2. Start the listener:
 

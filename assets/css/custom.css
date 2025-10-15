@@ -66,71 +66,51 @@ time,.post-meta{display:none !important}
 .post-nav a{opacity:.9}
 .post-nav a:hover{opacity:1;text-decoration:underline}
 
-/* === FINAL TIGHTEN === */
+/* ===== Nuclear reset for code blocks (one border, one padding) ===== */
 
-/* One wrapper carries border/bg; inner wrapper has none */
+/* Outer wrapper: keep ONLY this border/background */
 .highlighter-rouge,
 figure.highlight,
 .highlight {
   background: #f6f8fa !important;
   color: #24292f !important;
-  border: 1px solid #d0d7de !important;   /* single border only */
+  border: 1px solid #d0d7de !important;
   border-radius: 4px !important;
-  padding: 0 !important;
   margin: 0.5rem 0 !important;
+  padding: 0 !important;
   box-shadow: none !important;
 }
 
-/* kill the inner box that adds that extra line */
-.highlighter-rouge .highlight {
+/* Kill ALL inner borders/padding/shadows/outline */
+.highlighter-rouge * ,
+figure.highlight * ,
+.highlight * {
   border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
   background: transparent !important;
-  padding: 0 !important;
   margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* if the theme uses a table for line numbers, strip it */
-.highlight table,
-.highlight table tr,
-.highlight table td {
-  border: 0 !important;
-  background: transparent !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* ONLY padding lives here */
+/* Re-apply the ONLY padding to the text area */
 .highlight > pre,
 figure.highlight > pre,
 pre {
-  margin: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-  padding: 6px 10px !important;         /* compact */
+  padding: 6px 10px !important;
   font: 0.9rem/1.4 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
   overflow-x: auto;
+  white-space: pre;
 }
 
-/* no double styling for code inside pre */
-pre code,
-.highlight pre code {
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-  color: inherit !important;
-}
+/* Inner code inherits, no extra styles */
+pre code { color: inherit !important; }
 
-/* Inline code chips */
-code {
-  font: 0.9rem 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
+/* Inline code chips (non-block) */
+code:not(pre code) {
   background: #f2f4f6 !important;
   color: #24292f !important;
   border: 1px solid #e1e4e8 !important;
   border-radius: 4px !important;
   padding: 0.05rem 0.25rem !important;
 }
-
-/* tighten spacing when a block follows a paragraph */
-p + .highlighter-rouge,
-p + .highlight,
-p + figure.highlight { margin-top: 0.3rem !important; }
