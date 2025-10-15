@@ -100,13 +100,32 @@ pre {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: 8px 12px !important;     /* comfortable, consistent */
+  padding: 8px 12px !important;
   margin: 0 !important;
   border: 0 !important;
   background: transparent !important;
   font: 0.95rem/1.5 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
-  white-space: pre !important;  /* wraps long one-liners instead of scrolling */
-  overflow-x: auto !important;
+  white-space: pre !important;       /* no wrapping */
+  overflow-x: auto !important;       /* enable manual scroll */
+}
+
+/* === Minimal macOS-style scrollbars for code === */
+pre::-webkit-scrollbar {
+  height: 6px;
+}
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+pre::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+pre {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.3) transparent;
 }
 
 /* Inline code chips (short snippets in text) */
