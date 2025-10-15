@@ -105,8 +105,9 @@ pre {
   border: 0 !important;
   background: transparent !important;
   font: 0.95rem/1.5 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
-  overflow-x: auto;
-  white-space: pre;                  /* keep long one-liners scrolling */
+  white-space: pre-wrap !important;  /* wraps long one-liners instead of scrolling */
+  word-break: break-word !important;
+  overflow-x: visible !important;
 }
 
 /* Inline code chips (short snippets in text) */
