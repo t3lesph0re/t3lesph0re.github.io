@@ -66,49 +66,62 @@ time,.post-meta{display:none !important}
 .post-nav a{opacity:.9}
 .post-nav a:hover{opacity:1;text-decoration:underline}
 
-/* --- Code & CLI styling (force light, Rouge-aware) --- */
-:root { color-scheme: light; }  /* keep code blocks light even in OS dark mode */
-
-.highlight,
-.highlight pre,
-.highlight code,
-pre,
-code {
-  font-family: 'JetBrains Mono','Fira Code',monospace;
-  background: #f5f5f4 !important;   /* soft light */
-  color: #1a1a1a !important;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
-}
-
-/* Block code */
+/* --- Clean, GitHub-like code blocks --- */
+.highlighter-rouge,
 .highlight,
 .highlight pre,
 pre {
-  padding: 1rem;
-  overflow-x: auto;
-  line-height: 1.45;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+  background: #f6f8fa !important;     /* soft light */
+  color: #24292f !important;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  box-shadow: none !important;
+}
+
+/* block code container */
+.highlight,
+pre {
   margin: 1rem 0;
+  padding: 0;                          /* let <pre> handle padding */
 }
 
-/* Inline code */
+/* the actual pre area */
+.highlight pre,
+pre {
+  padding: 12px 14px;
+  overflow-x: auto;
+  line-height: 1.5;
+  font: 0.95rem/1.5 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
+  background: transparent !important;  /* avoid double bg */
+  border: 0 !important;
+}
+
+/* inline `code` */
 code {
-  padding: 0.2rem 0.4rem;
+  font: 0.92rem 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
+  background: #f6f8fa;
+  color: #24292f;
+  border: 1px solid #eaeef2;
   border-radius: 4px;
+  padding: 0.15rem 0.35rem;
 }
 
-/* Don’t double-style inner <code> */
+/* ensure no double styling when code sits inside pre */
 pre code,
 .highlight pre code {
-  background: none !important;
+  background: transparent !important;
   border: 0 !important;
   padding: 0 !important;
   color: inherit !important;
 }
 
-/* (Optional) terminal prompt coloring you can use with spans */
-pre code { white-space: pre-wrap; }
-pre code::selection { background: #cde4ff; }
-pre code span.user { color: #4caf50; font-weight: 600; }
-pre code span.prompt { color: #999; }
+/* optional: subtle terminal header bar */
+.code-header {
+  background: #eef1f4;
+  border: 1px solid #d0d7de;
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  padding: 6px 10px;
+  font: 0.82rem ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #57606a;
+}
