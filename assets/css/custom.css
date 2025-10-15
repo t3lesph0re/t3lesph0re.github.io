@@ -141,18 +141,21 @@ li > .highlighter-rouge { margin-top: 0.35rem !important; }
   overflow-x: visible;
 }
 
-/* --- Footer styling --- */
+/* --- Footer styling (light-only) --- */
 .site-footer {
   text-align: center;
   padding: 2rem 1rem;
-  background: #f9f9f9;
+  background: #f3f3f0; /* slightly darker than page bg (#f9f9f8) */
   border-top: 1px solid #e0e0e0;
   color: #333;
+  margin-top: 3rem;
+  box-shadow: 0 -1px 4px rgba(0,0,0,0.04); /* subtle separation */
 }
 
 .footer-icons {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 1.5rem;
   margin-bottom: 0.8rem;
 }
@@ -175,15 +178,4 @@ li > .highlighter-rouge { margin-top: 0.35rem !important; }
 .footer-note {
   font-size: 0.85rem;
   opacity: 0.7;
-}
-
-/* --- Optional dark mode --- */
-@media (prefers-color-scheme: dark) {
-  .site-footer {
-    background: #121212;
-    color: #ccc;
-    border-top: 1px solid #333;
-  }
-  .footer-icons a { color: #ccc; }
-  .footer-icons a:hover { color: #80ffb4; }
 }
