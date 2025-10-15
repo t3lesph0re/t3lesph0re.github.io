@@ -66,30 +66,31 @@ time,.post-meta{display:none !important}
 .post-nav a{opacity:.9}
 .post-nav a:hover{opacity:1;text-decoration:underline}
 
-/* --- Clean, tight CLI blocks (no heavy padding) --- */
+/* --- Clean, compact CLI blocks --- */
 :root { color-scheme: light; }
 
 .highlighter-rouge,
 .highlight,
 .highlight pre,
 pre {
-  background: #f6f8fa !important;   /* subtle light gray */
+  background: #f6f8fa !important;
   color: #24292f !important;
   border: 1px solid #d0d7de;
-  border-radius: 6px;
-  box-shadow: none !important;
-  margin: 0.75rem 0;
+  border-radius: 4px;
+  margin: 0.5rem 0;
   padding: 0;
+  box-shadow: none !important;
 }
 
-/* main text area inside */
+/* inner code area */
 .highlight pre,
 pre {
-  font: 0.94rem/1.45 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0.6rem 0.9rem;           /* reduced padding */
+  font: 0.9rem/1.4 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
+  background: none !important;
+  border: none !important;
+  padding: 0.4rem 0.75rem;  /* ✅ this is now the only padding */
   overflow-x: auto;
+  white-space: pre;
 }
 
 /* inline code */
@@ -99,7 +100,7 @@ code {
   color: #24292f;
   border: 1px solid #e1e4e8;
   border-radius: 4px;
-  padding: 0.1rem 0.35rem;
+  padding: 0.1rem 0.25rem;
 }
 
 /* prevent double-styling */
@@ -111,13 +112,11 @@ pre code,
   color: inherit !important;
 }
 
-/* optional small title bar */
-.code-header {
-  background: #f9f9fa;
-  border: 1px solid #d0d7de;
-  border-bottom: 0;
-  border-radius: 6px 6px 0 0;
-  padding: 4px 8px;
-  font: 0.8rem system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  color: #555;
+/* optional: smaller text on mobile */
+@media (max-width: 480px) {
+  .highlight pre,
+  pre {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
