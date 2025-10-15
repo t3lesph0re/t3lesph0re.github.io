@@ -140,3 +140,50 @@ li > .highlighter-rouge { margin-top: 0.35rem !important; }
   word-break: break-word;
   overflow-x: visible;
 }
+
+/* --- Footer styling --- */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #f9f9f9;
+  border-top: 1px solid #e0e0e0;
+  color: #333;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.footer-icons a {
+  color: #1a1a1a;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-icons a:hover {
+  color: #265e33; /* Deep Woods green */
+  transform: scale(1.1);
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+}
+
+.footer-note {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* --- Optional dark mode --- */
+@media (prefers-color-scheme: dark) {
+  .site-footer {
+    background: #121212;
+    color: #ccc;
+    border-top: 1px solid #333;
+  }
+  .footer-icons a { color: #ccc; }
+  .footer-icons a:hover { color: #80ffb4; }
+}
