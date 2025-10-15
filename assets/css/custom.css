@@ -66,11 +66,11 @@ time,.post-meta{display:none !important}
 .post-nav a{opacity:.9}
 .post-nav a:hover{opacity:1;text-decoration:underline}
 
-/* ===== Compact code blocks: one border, tiny padding ===== */
+/* ===== One-padding code blocks (final) ===== */
 
-/* Outer wrappers: carry border/bg, NO padding */
+/* Wrappers: border + bg only, NO padding/margins beyond this */
 .highlighter-rouge,
-.highlighter-rouge .highlight,
+figure.highlight,
 .highlight {
   background: #f6f8fa !important;
   color: #24292f !important;
@@ -78,23 +78,34 @@ time,.post-meta{display:none !important}
   border-radius: 4px !important;
   box-shadow: none !important;
   margin: 0.5rem 0 !important;
-  padding: 0 !important;              /* kill theme padding */
+  padding: 0 !important;
 }
 
-/* The <pre> that holds the text: tiny padding, NO border */
-.highlighter-rouge pre,
-.highlight pre,
-pre {
-  background: transparent !important;
+/* Nuke the table layout sometimes used for line numbers */
+.highlight table,
+.highlight table tr,
+.highlight table td {
   border: 0 !important;
+  background: transparent !important;
   margin: 0 !important;
-  padding: 6px 10px !important;       /* ← the ONLY padding */
+  padding: 0 !important;
+}
+
+/* The ONLY padding lives on <pre> */
+.highlight > pre,
+.highlight pre,
+figure.highlight > pre,
+pre {
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 6px 10px !important;   /* <- single, small padding */
   font: 0.9rem/1.4 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
   overflow-x: auto;
+  white-space: pre;
 }
 
-/* Prevent double-styling on the inner <code> */
-.highlighter-rouge pre code,
+/* Prevent double-styling on inner <code> */
 .highlight pre code,
 pre code {
   background: transparent !important;
@@ -103,45 +114,12 @@ pre code {
   color: inherit !important;
 }
 
-/* Inline `code` chips */
+/* Inline code chips (non-block) */
 code {
   font: 0.9rem 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
-  background: #f2f4f6;
-  color: #24292f;
-  border: 1px solid #e1e4e8;
-  border-radius: 4px;
-  padding: 0.05rem 0.25rem;
-}
-
-/* --- final cleanup for code blocks --- */
-
-/* remove table structure Jekyll adds around code */
-.highlight table,
-.highlight table td,
-.highlight table tr {
-  border: none !important;
-  background: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* if theme adds double inner box (the gray line you see) */
-.highlight pre {
-  border: none !important;
-  margin: 0 !important;
-  padding: 6px 10px !important; /* keep just this */
-  background: #f6f8fa !important;
-  box-shadow: none !important;
-}
-
-/* tighten inline code even more */
-code {
-  padding: 0.05rem 0.2rem !important;
-  background: #f5f5f5 !important;
-  border: 1px solid #e0e0e0 !important;
-}
-
-/* remove bottom white margin if present */
-.highlight {
-  margin-bottom: 0.75rem !important;
+  background: #f2f4f6 !important;
+  color: #24292f !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 4px !important;
+  padding: 0.05rem 0.25rem !important;
 }
