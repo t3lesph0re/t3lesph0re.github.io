@@ -214,12 +214,6 @@ C:\Windows\system32>whoami
 whoami
 chatterbox\administrator
 ```
-Screenshot showing the final flag: 
-
-<figure>
-  <img src="{{ '/assets/images/chatterbox-flag.png' | relative_url }}" alt="Chatterbox Flag" />
-  <figcaption>Admin Flag</figcaption>
-</figure>
 
 I hope this was helpful!
  
