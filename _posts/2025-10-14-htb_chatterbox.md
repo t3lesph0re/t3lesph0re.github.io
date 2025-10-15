@@ -143,14 +143,9 @@ Once you have updated this script (I downloaded it as it s defauly file name `36
 
 1. Start the HTTP python server:
 
-<pre><code>  
-
 ```bash
 t3lesph0re@neptune:~$ python3 -m http.server 80
 ```
-
-</code></pre>
-
 
 2. Start the listener:
 
