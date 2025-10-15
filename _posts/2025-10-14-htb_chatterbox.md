@@ -148,7 +148,7 @@ t3lesph0re@neptune:~$ python3 -m http.server 80
 ```
 {: .wraplong }
 
-2. Start the listener:dude
+2. Start the listener:
 
 ```bash
 t3lesph0re@neptune:~$ nc -lnvp 8082
