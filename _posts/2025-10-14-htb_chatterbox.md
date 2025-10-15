@@ -168,7 +168,7 @@ The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1*
   <figcaption>Reverse Shell as user Alfred</figcaption>
 </figure>
 
-## privilege escaation to admin
+## privilege escalation to admin
 
 From here we can use our low level user shell to enumerate the AutoLogon credentials:
 
@@ -214,11 +214,11 @@ C:\Windows\system32>whoami
 whoami
 chatterbox\administrator
 ```
-Screenshot showing admin access: 
+Screenshot showing the final flag: 
 
 <figure>
-  <img src="{{ '/assets/images/chatterbox-admin.png' | relative_url }}" alt="Chatterbox Admin" />
-  <figcaption>Access as Admin</figcaption>
+  <img src="{{ '/assets/images/chatterbox-flag.png' | relative_url }}" alt="Chatterbox Flag" />
+  <figcaption>Admin Flag</figcaption>
 </figure>
 
 I hope this was helpful!
