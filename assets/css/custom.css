@@ -66,9 +66,9 @@ time,.post-meta{display:none !important}
 .post-nav a{opacity:.9}
 .post-nav a:hover{opacity:1;text-decoration:underline}
 
-/* ===== Nuclear reset for code blocks (one border, one padding) ===== */
+/* ===== One-padding code blocks (final) ===== */
 
-/* Outer wrapper: keep ONLY this border/background */
+/* Outer wrapper: ONLY border/bg here */
 .highlighter-rouge,
 figure.highlight,
 .highlight {
@@ -81,36 +81,61 @@ figure.highlight,
   box-shadow: none !important;
 }
 
-/* Kill ALL inner borders/padding/shadows/outline */
+/* Kill all inner borders/padding/shadows */
 .highlighter-rouge * ,
 figure.highlight * ,
 .highlight * {
   border: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
-  background: transparent !important;
   margin: 0 !important;
   padding: 0 !important;
+  background: transparent !important;
 }
 
-/* Re-apply the ONLY padding to the text area */
+/* The ONLY padding lives on <pre> */
 .highlight > pre,
 figure.highlight > pre,
 pre {
-  padding: 6px 10px !important;
-  font: 0.9rem/1.4 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px !important;     /* comfortable, consistent */
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  font: 0.95rem/1.5 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
   overflow-x: auto;
-  white-space: pre;
+  white-space: pre;                  /* keep long one-liners scrolling */
 }
 
-/* Inner code inherits, no extra styles */
-pre code { color: inherit !important; }
-
-/* Inline code chips (non-block) */
-code:not(pre code) {
+/* Inline code chips (short snippets in text) */
+code {
   background: #f2f4f6 !important;
   color: #24292f !important;
   border: 1px solid #e1e4e8 !important;
   border-radius: 4px !important;
-  padding: 0.05rem 0.25rem !important;
+  padding: 0.12rem 0.3rem !important;
+  font: 0.9rem 'JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace;
+}
+
+/* Undo inline styling inside <pre> so blocks aren't “skinny chips” */
+pre code,
+.highlight pre code,
+figure.highlight pre code {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
+
+/* Slightly tighter spacing when a code block sits under a list item */
+li > .highlight,
+li > .highlighter-rouge { margin-top: 0.35rem !important; }
+
+/* Long one-liner fix: wrap instead of scroll */
+.wraplong pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: visible;
 }
