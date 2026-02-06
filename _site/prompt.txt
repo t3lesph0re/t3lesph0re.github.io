@@ -1,0 +1,28 @@
+I have a Jekyll blog using the remote theme "riggraz/no-style-please". I want to redesign it to be modern, minimal, and clean. First, run git checkout -b redesign before making any changes.
+
+1. REMOVE the remote theme dependency. Delete `remote_theme` from _config.yml and remove the `jekyll-remote-theme` plugin. I want to own all layouts directly. Add kramdown + rouge for syntax highlighting.
+
+2. CREATE assets/css/custom.css with:
+   - Fonts: DM Sans (body), JetBrains Mono (headers, code, dates) via Google Fonts import
+   - Color palette: off-white background (#fafaf9), dark text (#1a1a19), forest green accent (#2d6a4f), dark code blocks (#1e1e1e with #d4d4d4 text)
+   - Max content width 680px, centered
+   - Styled post list with mono dates and clean separators
+   - Dark code blocks with rounded corners, proper syntax highlighting colors (VS Code Dark+ style), styled scrollbars
+   - Inline code with subtle background and border
+   - Footer with subtle surface background, icon hover effects (color + translateY)
+   - Subtle fade-in animation on post pages
+   - Mobile responsive breakpoint at 600px
+   - Green ::selection color
+   - Proper typographic hierarchy: mono headers, different weights/sizes for h1/h2/h3
+
+3. UPDATE _layouts/default.html: clean doctype, load only custom.css (no inline styles), keep the existing footer with GitHub/LinkedIn/Deep Woods Security SVG icons. Add rel="noopener" to external links.
+
+4. UPDATE index.html: add a site-nav with links to posts, about, and archive. Change date format to YYYY-MM-DD.
+
+5. UPDATE _layouts/post.html: add a published date (formatted "Month DD, YYYY") under the post title with a bottom border. Change back link text to "← back".
+
+6. CREATE _layouts/archive.html and _layouts/page.html since the remote theme no longer provides them. Both should use the default layout with a back link and page title.
+
+7. DELETE head.html (redundant, default.html handles everything). Delete menu.yml (no longer used).
+
+Do NOT modify any files in _posts/, about.md, or archive.md. Do NOT delete any content. Show me the diff for every file before writing.

