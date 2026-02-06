@@ -3,20 +3,24 @@ layout: default
 title: Home
 ---
 
-<main class="wrap">
-  <header class="site-header">
-    <h1>{{ site.title }}</h1>
-    {% if site.description %}
-      <p class="site-tagline">{{ site.description }}</p>
-    {% endif %}
-  </header>
+<header class="site-header">
+  <h1>{{ site.title }}</h1>
+  {% if site.description %}
+    <p class="site-tagline">{{ site.description }}</p>
+  {% endif %}
+</header>
 
-  <ul class="postList">
-    {% for post in site.posts %}
-      <li>
-        <span>{{ post.date | date: "%Y-%m" }}</span>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-</main>
+<nav class="site-nav">
+  <a href="{{ '/' | relative_url }}">posts</a>
+  <a href="{{ '/about' | relative_url }}">about</a>
+  <a href="{{ '/archive' | relative_url }}">archive</a>
+</nav>
+
+<ul class="post-list">
+  {% for post in site.posts %}
+    <li>
+      <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

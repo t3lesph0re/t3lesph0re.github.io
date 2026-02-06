@@ -4,10 +4,9 @@ url: "https://t3lesph0re.github.io"
 baseurl: ""
 lang: "en"
 
-plugins:
-  - jekyll-remote-theme
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
 
-sass:
-  style: compressed
-
-remote_theme: riggraz/no-style-please
+rouge:
+  style: base16.dark
