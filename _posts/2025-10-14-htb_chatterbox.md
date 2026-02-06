@@ -7,13 +7,13 @@ title: "HTB: Chatterbox Walkthrough"
 
 # intro
 
-The goal of this post is to provide an updated version of Hack The Box's machine, [Chatterbox](https://app.hackthebox.com/machines/123) (I am not sure if any one else has made a similar post but more than one doesn't hurt). 
+The goal of this post is to provide an updated walkthrough of Hack The Box's machine, [Chatterbox](https://app.hackthebox.com/machines/123) (I am not sure if any one else has made a similar post but more than one doesn't hurt). 
 
-There where a few trouble areas when doing this machine so my goal is to help anyone who may have ran into similar issues themsleves. I followed [0xdf's](https://0xdf.gitlab.io/2018/06/18/htb-chatterbox.html) walkthrough and there seems to be some dated steps that could be updated. I intend to correct these dated issues with this post.
+There were a few trouble areas when doing this machine so my goal is to help anyone who may have ran into similar issues themsleves. I followed [0xdf's](https://0xdf.gitlab.io/2018/06/18/htb-chatterbox.html) walkthrough and there seems to be some dated steps that could be updated. I intend to correct these dated issues with this post.
 
 Let's dive in! 
 
-## reconnaissance
+## recon
 
 As usual with any CTF-type machine, we are going to start out with an **nmap** scan:
 
