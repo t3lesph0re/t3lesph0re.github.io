@@ -256,8 +256,8 @@ code {
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.15rem 0.35rem;
+  border-radius: 2px;
+  padding: 0.1rem 0.3rem;
   font: 0.85rem 'JetBrains Mono', monospace;
 }
 
