@@ -1,24 +1,38 @@
 /**
  * code-enhance.js
- * Prompt highlighting + copy button for CLI code blocks.
- * Drop in your Jekyll layout. No dependencies.
+ * Prompt highlighting + copy (commands only) for Jekyll/Rouge code blocks.
+ * Works with: .highlighter-rouge > .highlight > pre > code
+ * No dependencies.
  */
 (function () {
   'use strict';
 
-  // --- Prompt detection ---
-  // Windows CMD:  C:\Users\foo>command
-  // Linux root:   # command
-  // Linux user:   $ command
   var WIN_PROMPT = /^([A-Z]:\\[^>]*>)(.*)$/;
   var NIX_PROMPT = /^(\$|#)\s(.*)$/;
 
-  function enhanceBlock(pre) {
-    var code = pre.querySelector('code');
+  function extractCommands(text) {
+    var cmds = [];
+    text.split('\n').forEach(function (l) {
+      var w = l.match(WIN_PROMPT);
+      var n = l.match(NIX_PROMPT);
+      if (w) cmds.push(w[2]);
+      else if (n) cmds.push(n[2]);
+    });
+    return cmds.length ? cmds.join('\n') : text;
+  }
+
+  function enhanceBlock(container) {
+    var pre  = container.querySelector('pre');
+    var code = container.querySelector('code');
     var raw  = code || pre;
+    if (!raw) return;
+
     var text = raw.textContent;
 
-    // --- Copy button ---
+    // Make the Rouge wrapper the positioning anchor
+    container.style.position = 'relative';
+
+    // --- Copy button (appended to .highlighter-rouge) ---
     var btn = document.createElement('button');
     btn.className = 'code-copy';
     btn.setAttribute('aria-label', 'Copy to clipboard');
@@ -29,7 +43,8 @@
       '</svg>';
 
     btn.addEventListener('click', function () {
-      navigator.clipboard.writeText(text).then(function () {
+      var copyText = extractCommands(text);
+      navigator.clipboard.writeText(copyText).then(function () {
         btn.classList.add('copied');
         btn.innerHTML =
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
@@ -46,12 +61,7 @@
       });
     });
 
-    // Wrap pre in a relative container for button positioning
-    var wrapper = document.createElement('div');
-    wrapper.className = 'code-block';
-    pre.parentNode.insertBefore(wrapper, pre);
-    wrapper.appendChild(pre);
-    wrapper.appendChild(btn);
+    container.appendChild(btn);
 
     // --- Prompt highlighting ---
     var lines = text.split('\n');
@@ -59,7 +69,7 @@
       return WIN_PROMPT.test(l) || NIX_PROMPT.test(l);
     });
 
-    if (!hasPrompt) return; // Leave non-CLI blocks alone
+    if (!hasPrompt) return;
 
     var frag = document.createDocumentFragment();
 
@@ -68,32 +78,28 @@
       var nixMatch = line.match(NIX_PROMPT);
 
       if (winMatch) {
-        var promptSpan = document.createElement('span');
-        promptSpan.className = 'cli-prompt';
-        promptSpan.textContent = winMatch[1];
-
-        var cmdSpan = document.createElement('span');
-        cmdSpan.className = 'cli-cmd';
-        cmdSpan.textContent = winMatch[2];
-
-        frag.appendChild(promptSpan);
-        frag.appendChild(cmdSpan);
-      } else if (nixMatch) {
         var ps = document.createElement('span');
         ps.className = 'cli-prompt';
-        ps.textContent = nixMatch[1] + ' ';
-
+        ps.textContent = winMatch[1];
         var cs = document.createElement('span');
         cs.className = 'cli-cmd';
-        cs.textContent = nixMatch[2];
-
+        cs.textContent = winMatch[2];
         frag.appendChild(ps);
         frag.appendChild(cs);
+      } else if (nixMatch) {
+        var ps2 = document.createElement('span');
+        ps2.className = 'cli-prompt';
+        ps2.textContent = nixMatch[1] + ' ';
+        var cs2 = document.createElement('span');
+        cs2.className = 'cli-cmd';
+        cs2.textContent = nixMatch[2];
+        frag.appendChild(ps2);
+        frag.appendChild(cs2);
       } else {
-        var outputSpan = document.createElement('span');
-        outputSpan.className = 'cli-output';
-        outputSpan.textContent = line;
-        frag.appendChild(outputSpan);
+        var out = document.createElement('span');
+        out.className = 'cli-output';
+        out.textContent = line;
+        frag.appendChild(out);
       }
 
       if (i < lines.length - 1) {
@@ -105,11 +111,23 @@
     raw.appendChild(frag);
   }
 
-  // --- Init on DOM ready ---
   function init() {
-    var blocks = document.querySelectorAll('pre');
-    for (var i = 0; i < blocks.length; i++) {
-      enhanceBlock(blocks[i]);
+    var rougeBlocks = document.querySelectorAll('.highlighter-rouge');
+
+    if (rougeBlocks.length) {
+      for (var i = 0; i < rougeBlocks.length; i++) {
+        enhanceBlock(rougeBlocks[i]);
+      }
+    } else {
+      // Fallback: plain <pre> without Rouge
+      var pres = document.querySelectorAll('pre');
+      for (var j = 0; j < pres.length; j++) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'highlighter-rouge';
+        pres[j].parentNode.insertBefore(wrapper, pres[j]);
+        wrapper.appendChild(pres[j]);
+        enhanceBlock(wrapper);
+      }
     }
   }
 

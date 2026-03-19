@@ -1,10 +1,5 @@
 /* ===== Code Block Enhancements ===== */
 
-/* Wrapper for positioning copy button */
-.code-block {
-  position: relative;
-}
-
 /* Copy button — top-right, visible on hover */
 .code-copy {
   position: absolute;
@@ -24,7 +19,7 @@
   z-index: 1;
   line-height: 1;
 }
-.code-block:hover .code-copy {
+.highlighter-rouge:hover .code-copy {
   opacity: 1;
 }
 .code-copy:hover {
@@ -37,7 +32,7 @@
 
 /* --- CLI Prompt Highlighting --- */
 
-/* Prompt path (e.g. C:\Users\foo>) — dimmed */
+/* Prompt path (e.g. C:\Users\foo>) */
 .cli-prompt {
   color: #6a9955;
 }
@@ -48,7 +43,7 @@
   font-weight: 500;
 }
 
-/* Output lines — default muted */
+/* Output lines — readable but subordinate */
 .cli-output {
   color: #b0b0b0;
 }
