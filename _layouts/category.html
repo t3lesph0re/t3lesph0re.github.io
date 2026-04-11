@@ -1,0 +1,22 @@
+---
+layout: default
+---
+<nav class="page-nav">
+  <a href="{{ '/' | relative_url }}">&larr; back</a>
+</nav>
+
+<h1 class="page-title">{{ page.title }}</h1>
+
+{% if page.description %}
+  <p class="category-description">{{ page.description }}</p>
+{% endif %}
+
+<ul class="post-list">
+  {% assign posts_in_cat = site.posts | where: "category", page.category %}
+  {% for post in posts_in_cat %}
+    <li>
+      <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

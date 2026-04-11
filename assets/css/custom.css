@@ -397,18 +397,213 @@ code {
 
 /* --- CLI Prompt Highlighting --- */
 
-/* Prompt path (e.g. C:\Users\foo>) */
 .cli-prompt {
   color: #6a9955;
 }
 
-/* Command the operator typed — bright white */
 .cli-cmd {
   color: #e5e5e5;
   font-weight: 500;
 }
 
-/* Output lines — readable but subordinate */
 .cli-output {
   color: #b0b0b0;
+}
+
+
+/* ===========================================================
+   ADDITIONS
+   =========================================================== */
+
+/* Block-level wrappers get position: relative for the copy button. */
+div.highlighter-rouge,
+figure.highlight {
+  position: relative;
+}
+
+/* ===== Inline code — green tint + dark accent text ===== */
+.post article :not(pre) > code,
+.post article :not(pre) > code.highlighter-rouge {
+  background: rgba(45, 106, 79, 0.07);
+  color: #1b4332;
+  border: none;
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 500;
+  overflow: visible;
+}
+
+/* Reset once more inside pre so code blocks stay untinted */
+.post article pre code,
+.post article pre code.highlighter-rouge {
+  background: transparent;
+  color: var(--code-text);
+  padding: 0;
+  border-radius: 0;
+  font-weight: 400;
+  font-size: inherit;
+}
+
+/* ===== Post meta (date + category row) ===== */
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-meta .post-date-detail {
+  display: inline;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.post-category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  font-weight: 500;
+  padding: 0.15rem 0.5rem;
+  background: rgba(45, 106, 79, 0.08);
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.post-category:hover {
+  background: rgba(45, 106, 79, 0.15);
+  text-decoration: none;
+}
+
+.post-category::before {
+  content: "#";
+  opacity: 0.5;
+  margin-right: 0.1rem;
+}
+
+/* ===== Category list page ===== */
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.category-list li:last-child {
+  border-bottom: none;
+}
+
+.category-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);
+  flex: 1;
+}
+
+.category-link::before {
+  content: "#";
+  opacity: 0.5;
+  margin-right: 0.15rem;
+}
+
+.category-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.category-description {
+  font-size: 0.95rem;
+  opacity: 0.7;
+  margin: -0.5rem 0 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== Tables ===== */
+.post article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+
+.post article thead th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  opacity: 0.75;
+}
+
+.post article tbody td {
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+.post article tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.post article tbody td:first-child {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  color: var(--accent);
+  padding-right: 1rem;
+}
+
+/* ===== Post section spacing ===== */
+.post article h2 {
+  margin-top: 2.75rem;
+  padding-top: 0.5rem;
+}
+
+.post article h2:first-of-type {
+  margin-top: 2rem;
+}
+
+.post article ol li,
+.post article ul li {
+  margin-bottom: 0.4rem;
+  line-height: 1.6;
+}
+
+/* ===== Figure captions ===== */
+.post article figcaption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  opacity: 0.55;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+pre,
+code,
+.highlight,
+.highlighter-rouge {
+  font-feature-settings: "liga" 0, "calt" 0;
+  font-variant-ligatures: none;
 }

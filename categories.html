@@ -1,0 +1,21 @@
+---
+layout: default
+title: categories
+permalink: /categories/
+---
+<nav class="page-nav">
+  <a href="{{ '/' | relative_url }}">&larr; back</a>
+</nav>
+
+<h1 class="page-title">categories</h1>
+
+<ul class="category-list">
+  {% assign cats = "pentesting,walkthrough,tools,career" | split: "," %}
+  {% for cat in cats %}
+    {% assign posts_in_cat = site.posts | where: "category", cat %}
+    <li>
+      <a class="category-link" href="{{ '/category/' | append: cat | append: '/' | relative_url }}">{{ cat }}</a>
+      <span class="category-count">{{ posts_in_cat | size }}</span>
+    </li>
+  {% endfor %}
+</ul>
