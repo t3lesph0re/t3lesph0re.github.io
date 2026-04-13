@@ -9,6 +9,21 @@ The foothold was an Amazon WorkSpaces VDI. Local admin on the box, CrowdStrike a
 
 This is the writeup of how ESC8 still worked, what I had to patch to get there, and the thing that cost me a day before I figured out the answer wasn't to fight the kernel.
 
+## what ESC8 is
+
+ESC8 is an NTLM relay attack against Active Directory Certificate Services. If a CA exposes the Web Enrollment endpoint (`/certsrv/`) over HTTP and accepts NTLM authentication, anyone who can coerce a privileged machine into authenticating to an attacker-controlled host can relay that authentication to the CA and request a certificate as the coerced machine.
+
+The certificate is the payload. Once you hold a certificate issued under the `DomainController` template in the name of a DC's machine account, you use it to PKINIT for a Kerberos TGT, extract the NT hash from the PAC, and DCSync. Domain compromise without ever touching an exploit or a memory dump.
+
+<figure>
+  <img src="{{ '/assets/images/esc8-flow.svg' | relative_url }}" alt="ESC8 attack flow diagram. A top row shows the attacker VDI containing PetitPotam, StreamDivert plus ntlmrelayx, and Rubeus. A middle row shows the domain controller and the subCA Web Enrollment endpoint. Arrows show PetitPotam coercing the DC over EFSRPC, the DC authenticating over SMB to the VDI, ntlmrelayx relaying that auth to the subCA, the subCA returning a certificate for the DC machine account, Rubeus using the cert for PKINIT to pull the NT hash, and finally DCSync over DRSUAPI to dump NTDS." />
+  <figcaption>The full chain. Gray arrows are the victim traffic the attack captures. Green solid is attacker-controlled flow. Green dashed is the cert-based PKINIT step that turns the certificate into a TGT.</figcaption>
+</figure>
+
+The chain has three moving parts. PetitPotam tells the DC to authenticate over SMB to `$ATTACKER_IP`. StreamDivert rewrites that inbound packet inside the kernel so it lands on port 8445 instead of 445, because 445 is owned by the Windows SMB driver and you can't bind a userland socket there. ntlmrelayx listens on 8445, catches the relayed authentication, and forwards it to the subCA's HTTP enrollment endpoint under the `DomainController` template. Certificate comes back. Rubeus turns it into a TGT, extracts the hash. secretsdump finishes the job.
+
+Everything below is the plumbing required to make each of those steps work on a locked-down Windows VDI with EDR in the path.
+
 Placeholders for the obvious reasons: `$DOMAIN`, `$DC`, `$SUBCA`, `$DC_IP`, `$ATTACKER_IP`, `$USER`.
 
 ## enumeration
