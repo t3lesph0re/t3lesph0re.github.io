@@ -19,3 +19,19 @@ layout: default
     {{ content }}
   </article>
 </div>
+
+<script>
+  // Wrap every figure image in an anchor that opens the full-size source
+  // in a new tab. Pure progressive enhancement - if JS is off, images
+  // still display, just aren't clickable.
+  document.querySelectorAll('.post article figure img').forEach(function (img) {
+    if (img.parentElement.tagName === 'A') return; // already wrapped
+    var link = document.createElement('a');
+    link.href = img.src;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.className = 'figure-link';
+    img.parentNode.insertBefore(link, img);
+    link.appendChild(img);
+  });
+</script>
