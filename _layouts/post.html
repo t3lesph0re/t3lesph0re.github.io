@@ -20,18 +20,47 @@ layout: default
   </article>
 </div>
 
+<!-- Lightbox overlay - hidden by default, shown when a figure image is clicked -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <img id="lightbox-img" alt="">
+</div>
+
 <script>
-  // Wrap every figure image in an anchor that opens the full-size source
-  // in a new tab. Pure progressive enhancement - if JS is off, images
-  // still display, just aren't clickable.
+(function () {
+  var lb  = document.getElementById('lightbox');
+  var lbI = document.getElementById('lightbox-img');
+  if (!lb || !lbI) return;
+
+  function open(src, alt) {
+    lbI.src = src;
+    lbI.alt = alt || '';
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Clear the src after the fade so the next open starts clean
+    setTimeout(function () { lbI.src = ''; }, 200);
+  }
+
+  // Make every figure image in the post body clickable
   document.querySelectorAll('.post article figure img').forEach(function (img) {
-    if (img.parentElement.tagName === 'A') return; // already wrapped
-    var link = document.createElement('a');
-    link.href = img.src;
-    link.target = '_blank';
-    link.rel = 'noopener';
-    link.className = 'figure-link';
-    img.parentNode.insertBefore(link, img);
-    link.appendChild(img);
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function () {
+      open(img.currentSrc || img.src, img.alt);
+    });
   });
+
+  // Close on overlay click
+  lb.addEventListener('click', close);
+
+  // Close on Escape
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lb.classList.contains('is-open')) close();
+  });
+})();
 </script>
