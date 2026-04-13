@@ -607,3 +607,39 @@ code,
   font-feature-settings: "liga" 0, "calt" 0;
   font-variant-ligatures: none;
 }
+
+/* ===========================================================
+   APPEND THESE TWO BLOCKS TO THE BOTTOM OF custom.css
+   =========================================================== */
+
+/* ===== Click-to-enlarge figures ===== */
+/* The wrapping anchor is added by JS in post.html. These rules
+   give the user a visual cue that the image is interactive. */
+
+.post article figure a.figure-link {
+  display: block;
+  cursor: zoom-in;
+  transition: opacity 0.15s ease;
+}
+
+.post article figure a.figure-link:hover {
+  opacity: 0.92;
+  text-decoration: none;
+}
+
+.post article figure a.figure-link img {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ===== Disable JetBrains Mono programming ligatures in code ===== */
+/* Without this, -> renders as → and => renders as ⇒ in code blocks,
+   which is misleading when the actual config file uses ASCII. */
+
+pre,
+code,
+.highlight,
+.highlighter-rouge {
+  font-feature-settings: "liga" 0, "calt" 0;
+  font-variant-ligatures: none;
+}

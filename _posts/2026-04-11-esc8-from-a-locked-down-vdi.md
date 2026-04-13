@@ -145,13 +145,22 @@ First run installs the WinDivert driver. You need an elevated prompt for that to
 [*] Starting packet diverters...
 ```
 
-If you see those two lines, the filter is live and the prompt is holding. Leave it. When the coercion fires later, you'll see packet rewrite lines stream past:
+<figure>
+  <img src="{{ '/assets/images/streamdivert-startup.png' | relative_url }}" alt="StreamDivert startup output showing the TCP diverter binding to port 445 and UDP/ICMP diverters failing as expected" />
+  <figcaption>StreamDivert parsing the config and binding the TCP diverter to port 445.</figcaption>
+</figure>
+
+You'll see `[-] InboundUDPDivertProxy() failed to open the WinDivert device (87)` and the same for ICMP. Ignore them. StreamDivert tries to spin up UDP and ICMP diverters in addition to TCP, and they fail because the config only has a TCP rule. The line you actually care about is `[*] InboundTCPDivertProxy(445:?) Start`. If that one is there, the filter is live.
+
+If you see the startup banner, leave the prompt holding. When the coercion fires later, you'll see packet rewrite lines stream past:
 
 ```
 $DC_IP:<eph> -> $ATTACKER_IP:445 => $ATTACKER_IP:8445
 ```
 
 If those lines show up, the filter caught the packet before `srv2.sys` did, and the relay is going to get it on 8445. That's the whole trick.
+
+There's a thing in Daoist writing about water. It never argues with the stone, it just finds the place underneath. I thought about that a lot while I was reading the WFP docs at 2am.
 
 ## The three-prompt fire sequence
 
