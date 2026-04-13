@@ -160,8 +160,6 @@ $DC_IP:<eph> -> $ATTACKER_IP:445 => $ATTACKER_IP:8445
 
 If those lines show up, the filter caught the packet before `srv2.sys` did, and the relay is going to get it on 8445. That's the whole trick.
 
-There's a thing in Daoist writing about water. It never argues with the stone, it just finds the place underneath. I thought about that a lot while I was reading the WFP docs at 2am.
-
 ## The three-prompt fire sequence
 
 Three elevated PowerShell windows. AMSI bypass in each one before you run anything.
