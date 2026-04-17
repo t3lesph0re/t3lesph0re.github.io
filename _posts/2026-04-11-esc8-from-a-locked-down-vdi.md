@@ -153,7 +153,7 @@ cd C:\Windows\Temp\work\sd
 .\StreamDivert.exe -v -f divert.conf
 ```
 
-First run installs the WinDivert driver. You need an elevated prompt for that to work. Expected output on startup:
+**This step requires local admin.** First run installs the WinDivert driver into the kernel. Without an elevated prompt, the driver load fails silently and no packets get rewritten. Expected output on startup:
 
 ```
 [*] Parsed 1 inbound and 0 outbound relay entries.
