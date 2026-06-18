@@ -43,11 +43,9 @@ layout: default
     lb.classList.remove('is-open');
     lb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    // Clear the src after the fade so the next open starts clean
     setTimeout(function () { lbI.src = ''; }, 200);
   }
 
-  // Make every figure image in the post body clickable
   document.querySelectorAll('.post article figure img').forEach(function (img) {
     img.style.cursor = 'zoom-in';
     img.addEventListener('click', function () {
@@ -55,12 +53,32 @@ layout: default
     });
   });
 
-  // Close on overlay click
   lb.addEventListener('click', close);
 
-  // Close on Escape
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && lb.classList.contains('is-open')) close();
+  });
+})();
+</script>
+
+<!-- Heading anchors: adds a hover-reveal # to each section header so it can be linked directly -->
+<script>
+(function () {
+  var heads = document.querySelectorAll('.post article h2, .post article h3');
+  heads.forEach(function (h) {
+    var id = h.id;
+    if (!id) {
+      id = h.textContent.trim().toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-');
+      h.id = id;
+    }
+    var a = document.createElement('a');
+    a.className = 'header-anchor';
+    a.href = '#' + id;
+    a.textContent = '#';
+    a.setAttribute('aria-label', 'Link to this section');
+    h.insertBefore(a, h.firstChild);
   });
 })();
 </script>
