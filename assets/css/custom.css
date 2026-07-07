@@ -10,7 +10,7 @@
   --border: #e0dfdd;
   --code-bg: #1e1e1e;
   --code-text: #d4d4d4;
-  --max-width: 680px;
+  --max-width: 640px;
 }
 
 /* ===== Reset & Base ===== */
@@ -42,7 +42,16 @@ body {
 .page-content {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 2rem 1.5rem 3rem;
+  padding: 2rem 2rem 3rem;
+}
+
+/* Wide desktop: let the column breathe. 820px lands around
+   90 chars, wide but still readable with the 1.65 leading.
+   Narrow and mid-width windows keep the tighter 640px default. */
+@media (min-width: 1000px) {
+  .page-content {
+    max-width: 820px;
+  }
 }
 
 /* ===== Links ===== */
@@ -156,7 +165,7 @@ h3 { font-size: 1.1rem; font-weight: 500; }
 }
 
 .post article {
-  line-height: 1.75;
+  line-height: 1.65;
 }
 
 /* ===== Page Layout ===== */
