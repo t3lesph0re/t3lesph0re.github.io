@@ -3,13 +3,14 @@
 
 /* ===== Variables ===== */
 :root {
-  --bg: #fafaf9;
-  --text: #1a1a19;
-  --accent: #2d6a4f;
-  --surface: #f0efed;
-  --border: #e0dfdd;
-  --code-bg: #1e1e1e;
-  --code-text: #d4d4d4;
+  --bg: #f7f7f6;
+  --text: #1c1d21;
+  --accent: #3e7a6e;
+  --accent-strong: #2b544c;
+  --surface: #eeeeec;
+  --border: #e2e2e0;
+  --code-bg: rgba(26, 28, 32, 0.72);
+  --code-text: #c8ccd4;
   --max-width: 640px;
 }
 
@@ -30,11 +31,11 @@ body {
 
 /* ===== Selection ===== */
 ::selection {
-  background: #2d6a4f;
+  background: var(--accent);
   color: #fff;
 }
 ::-moz-selection {
-  background: #2d6a4f;
+  background: var(--accent);
   color: #fff;
 }
 
@@ -61,7 +62,7 @@ a {
   transition: color 0.2s ease;
 }
 a:hover {
-  color: #1b4332;
+  color: var(--accent-strong);
   text-decoration: underline;
 }
 
@@ -203,26 +204,30 @@ figure {
 .highlighter-rouge,
 figure.highlight,
 div.highlight {
-  background: var(--code-bg);
+  background: transparent;
   color: var(--code-text);
-  border-radius: 8px;
-  margin: 1.25rem 0;
+  border-radius: 12px;
+  margin: 1.5rem 0;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 pre {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: 1rem 1.25rem;
+  padding: 1.15rem 1.35rem;
   margin: 0;
-  background: var(--code-bg);
-  color: var(--code-text);
+  background: linear-gradient(180deg, rgba(41, 45, 60, 0.88) 0%, rgba(24, 26, 36, 0.94) 100%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(18, 20, 30, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: #e6e9ef;
   font: 0.85rem/1.6 'JetBrains Mono', monospace;
   white-space: pre;
   overflow-x: auto;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 /* Scrollbar for code blocks */
@@ -248,13 +253,13 @@ pre code {
 /* ===== Syntax Highlighting VS Code Dark+ ===== */
 .highlight .c,
 .highlight .c1,
-.highlight .cm { color: #6a9955; }
+.highlight .cm { color: #7a8296; font-style: italic; }
 .highlight .k,
 .highlight .kd,
 .highlight .kn,
 .highlight .kp,
 .highlight .kr,
-.highlight .kt { color: #569cd6; }
+.highlight .kt { color: #c792ea; }
 .highlight .s,
 .highlight .s1,
 .highlight .s2,
@@ -263,27 +268,27 @@ pre code {
 .highlight .sd,
 .highlight .se,
 .highlight .sh,
-.highlight .sx { color: #ce9178; }
-.highlight .na { color: #9cdcfe; }
-.highlight .nb { color: #4ec9b0; }
+.highlight .sx { color: #c3e88d; }
+.highlight .na { color: #82aaff; }
+.highlight .nb { color: #89ddff; }
 .highlight .nc,
-.highlight .nn { color: #4ec9b0; }
+.highlight .nn { color: #ffcb6b; }
 .highlight .nf,
-.highlight .fm { color: #dcdcaa; }
-.highlight .no { color: #4fc1ff; }
+.highlight .fm { color: #82aaff; }
+.highlight .no { color: #f78c6c; }
 .highlight .mi,
 .highlight .mf,
 .highlight .mh,
 .highlight .mo,
-.highlight .il { color: #b5cea8; }
+.highlight .il { color: #f78c6c; }
 .highlight .o,
-.highlight .ow { color: #d4d4d4; }
-.highlight .p { color: #d4d4d4; }
-.highlight .gd { color: #f44747; }
-.highlight .gi { color: #b5cea8; }
+.highlight .ow { color: #89ddff; }
+.highlight .p { color: #babed2; }
+.highlight .gd { color: #ff5370; }
+.highlight .gi { color: #c3e88d; }
 .highlight .ge { font-style: italic; }
 .highlight .gs { font-weight: bold; }
-.highlight .err { color: #f44747; }
+.highlight .err { color: #ff5370; }
 
 /* ===== Footer ===== */
 .site-footer {
@@ -376,19 +381,19 @@ pre code {
   color: rgba(255, 255, 255, 0.7);
 }
 .code-copy.copied {
-  color: #4ec9b0;
+  color: #c3e88d;
 }
 
 /* CLI Prompt Highlighting */
 .cli-prompt {
-  color: #6a9955;
+  color: #c3e88d;
 }
 .cli-cmd {
-  color: #e5e5e5;
+  color: #e6e9ef;
   font-weight: 500;
 }
 .cli-output {
-  color: #b0b0b0;
+  color: #8a90a6;
 }
 
 /* ===========================================================
@@ -404,8 +409,8 @@ figure.highlight {
 /* Inline code - green tint + dark accent text */
 .post article :not(pre) > code,
 .post article :not(pre) > code.highlighter-rouge {
-  background: rgba(45, 106, 79, 0.07);
-  color: #1b4332;
+  background: rgba(62, 122, 110, 0.08);
+  color: var(--accent-strong);
   border: none;
   border-radius: 3px;
   padding: 0.1rem 0.4rem;
@@ -452,14 +457,14 @@ figure.highlight {
   color: var(--accent);
   font-weight: 500;
   padding: 0.15rem 0.5rem;
-  background: rgba(45, 106, 79, 0.08);
+  background: rgba(62, 122, 110, 0.08);
   border-radius: 3px;
   text-decoration: none;
   transition: background 0.2s ease;
 }
 
 .post-category:hover {
-  background: rgba(45, 106, 79, 0.15);
+  background: rgba(62, 122, 110, 0.15);
   text-decoration: none;
 }
 
