@@ -2,7 +2,7 @@
 layout: post
 title: "ESC8 from a locked-down VDI"
 date: 2026-04-11
-category: pentesting
+category: tradecraft
 ---
 
 The foothold was an Amazon WorkSpaces VDI. Local admin on the box, CrowdStrike and Splunk in the path, Zscaler in front of anything that looked like the internet. No Kali on the other end of a VPN, no flat network, no friendly listener on 445. The attacker host and the relay host were the same machine, and that machine was Windows.

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Pwning a Domain Controller with net use"
-category: pentesting
+category: tradecraft
 ---
 
 In this post I'll discuss how using a simple built-in Windows utility can allow for a full Domain Controller takeover.

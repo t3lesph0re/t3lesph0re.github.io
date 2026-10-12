@@ -679,3 +679,68 @@ code,
 @media (max-width: 600px) {
   .post article .header-anchor { display: none; }
 }
+/* ===========================================================
+   Modern pass: light-only polish (2026-10-12)
+   This blog is light-only by design. Below: interaction
+   refinements, smooth in-page anchor scrolling, and a
+   reduced-motion guard. All colors come from the :root tokens
+   at the top of this file.
+   =========================================================== */
+
+/* Smooth jumps to heading anchors, offset so the target header
+   isn't jammed against the viewport's top edge. */
+html { scroll-behavior: smooth; }
+.post article h2,
+.post article h3 { scroll-margin-top: 1.5rem; }
+
+/* ===== Post list: whole-row hover ===== */
+.post-list li:not(.post-year) {
+  border-radius: 6px;
+  transition: background 0.15s ease, padding 0.15s ease, margin 0.15s ease;
+}
+.post-list li:not(.post-year):hover {
+  background: var(--surface);
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  margin-left: -0.6rem;
+  margin-right: -0.6rem;
+}
+.post-list li:not(.post-year):hover .post-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+.post-list li:not(.post-year):hover .post-date { opacity: 0.75; }
+
+/* ===== Animated underline on body prose links ===== */
+.post article a:not(.header-anchor):not(.post-category),
+.page-content p a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 1.15em;
+  transition: background-size 0.25s ease, color 0.2s ease;
+}
+.post article a:not(.header-anchor):not(.post-category):hover,
+.page-content p a:hover {
+  background-size: 100% 1px;
+  text-decoration: none;
+}
+
+/* ===== Keyboard focus rings (a11y) ===== */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

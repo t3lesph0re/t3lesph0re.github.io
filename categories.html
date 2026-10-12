@@ -10,7 +10,7 @@ permalink: /categories/
 <h1 class="page-title">categories</h1>
 
 <ul class="category-list">
-  {% assign cats = "pentesting,walkthrough,tools,career" | split: "," %}
+  {% assign cats = "tradecraft,walkthrough,tools,career" | split: "," %}
   {% for cat in cats %}
     {% assign posts_in_cat = site.posts | where: "category", cat %}
     <li>

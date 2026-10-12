@@ -2,7 +2,7 @@
 layout: post
 title: "The Ten Pillars of the Elite Operator"
 date: 2026-07-31
-category: pentesting
+category: tradecraft
 ---
 
 <figure>
