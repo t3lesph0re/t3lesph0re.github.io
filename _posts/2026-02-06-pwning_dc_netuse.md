@@ -2,6 +2,9 @@
 layout: post
 title: "Pwning a Domain Controller with net use"
 category: tradecraft
+redirect_from:
+  - /pentesting/2026/02/06/pwning_dc_netuse.html
+  - /pentesting/2026/02/06/pwning_dc_netuse/
 ---
 
 In this post I'll discuss how using a simple built-in Windows utility can allow for a full Domain Controller takeover.

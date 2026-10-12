@@ -10,3 +10,6 @@ kramdown:
 
 rouge:
   style: base16.dark
+
+plugins:
+  - jekyll-redirect-from
