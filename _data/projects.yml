@@ -1,0 +1,8 @@
+- name: subrecon
+  url: https://github.com/t3lesph0re/subrecon
+  post_title: "Subrecon"   # hides that post from writing and the archive; the project link covers it
+  summary: Subdomain recon CLI that chains assetfinder, subfinder, dnsx, and httpx into one pipeline. pip and pipx installable.
+
+- name: Deep Woods Security
+  url: https://deepwoodssec.com
+  summary: Independent offensive security research outfit I founded. Supply chain, on-chain infrastructure, and AI systems. We find the routes first and publish what we learn.

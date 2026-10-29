@@ -744,3 +744,200 @@ button:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* ===========================================================
+   Portfolio home (2026-10-28)
+   Hero, section labels, and the entry grid used by research,
+   experience, projects, certs, and education. All colors come
+   from the :root tokens at the top of this file.
+   =========================================================== */
+
+/* ===== Hero ===== */
+.hero {
+  margin-bottom: 2.5rem;
+}
+.hero-name {
+  margin: 0;
+  font-size: 1.75rem;
+}
+.hero-handle {
+  margin: 0.15rem 0 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  opacity: 0.5;
+}
+.hero-tagline {
+  margin: 1.1rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.hero-bio {
+  margin: 0.6rem 0 0;
+  max-width: 62ch;
+  opacity: 0.85;
+}
+.hero-links {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+}
+
+/* ===== Sections ===== */
+.section {
+  margin-top: 3rem;
+  scroll-margin-top: 1.5rem;
+}
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  opacity: 0.5;
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-more {
+  margin: 0.75rem 0 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+}
+
+/* ===== Entry grid =====
+   Left column: date range, id, or group name in mono.
+   Right column: title, org line, one-line description. */
+.entry-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.entry {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 0.2rem 1.25rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.entry:last-child {
+  border-bottom: none;
+}
+.entry-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  opacity: 0.5;
+  padding-top: 0.25rem;
+  white-space: nowrap;
+}
+.entry-meta.entry-id {
+  opacity: 1;
+  font-weight: 500;
+}
+.entry-meta.entry-id a {
+  color: var(--accent);
+}
+.entry-body {
+  min-width: 0;
+}
+.entry-title {
+  font-weight: 500;
+}
+.entry-sub {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.65;
+}
+.entry-desc {
+  margin: 0.35rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* ===== Tags (severity, certs) ===== */
+.tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  padding: 0.15rem 0.5rem;
+  background: rgba(62, 122, 110, 0.08);
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+a.tag:hover {
+  background: rgba(62, 122, 110, 0.15);
+  text-decoration: none;
+}
+.entry-title + .tag {
+  margin-left: 0.5rem;
+  vertical-align: 1px;
+}
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 0.1rem;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 600px) {
+  .entry {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+  .entry-meta {
+    padding-top: 0;
+    white-space: normal;
+  }
+}
+
+/* Portfolio home fixes from first render:
+   ids in the left column may wrap (long project names),
+   writing dates are full YYYY-MM-DD so need a wider column,
+   and the nav wraps on narrow screens instead of clipping. */
+.entry-meta.entry-id {
+  white-space: normal;
+}
+.section .post-list .post-date {
+  width: 6rem;
+}
+.site-nav {
+  flex-wrap: wrap;
+}
+
+/* Hero photo: sits left of the name on desktop, above it on mobile.
+   Overrides the global img margin/centering for this one element. */
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.hero-photo {
+  width: 104px;
+  height: 104px;
+  margin: 0;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .hero-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .hero-photo {
+    width: 88px;
+    height: 88px;
+  }
+}

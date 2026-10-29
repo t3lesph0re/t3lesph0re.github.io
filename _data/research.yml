@@ -1,0 +1,17 @@
+# Advisories and CVEs, rendered on the home page under "research".
+# The section stays hidden while this list is empty.
+# Keep anything still under coordinated disclosure out of here; this repo is public.
+#
+# Fields:
+#   id        CVE or advisory id, shown in the left column
+#   target    product and version
+#   summary   one line, bug class and impact
+#   severity  low / medium / high / critical (optional)
+#   url       advisory link (optional)
+#
+# - id: CVE-2026-00000
+#   target: Example Project 1.2.3
+#   summary: Regex denial of service in the request body parser, remote and unauthenticated.
+#   severity: high
+#   url: https://example.com/advisory
+[]

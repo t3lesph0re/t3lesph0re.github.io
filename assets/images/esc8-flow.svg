@@ -24,6 +24,9 @@
     .legend    { font-size: 11px; fill: #666; }
   </style>
 
+  <!-- page background so the diagram is readable on the dark lightbox overlay -->
+  <rect x="0" y="0" width="680" height="450" fill="#f7f7f6"/>
+
   <!-- attacker VDI container -->
   <rect x="30" y="30" width="620" height="120" rx="10" fill="rgba(45, 106, 79, 0.04)" stroke="#2d6a4f" stroke-width="0.5" stroke-dasharray="4 3"/>
   <text class="container" x="48" y="50">ATTACKER VDI</text>

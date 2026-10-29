@@ -1,0 +1,23 @@
+- role: Penetration Tester & Red Team Operator
+  org: ECS Federal
+  location: Remote
+  period: Jul 2024 – present
+  summary: Federal healthcare red team. I built and run the Mythic C2 and Apache redirector infrastructure, execute assumed-breach operations mapped to ATT&CK from initial access through objective completion, and do the Active Directory and cloud (AWS, Azure) exploitation that drives the client's remediation priorities. Mentor the junior testers.
+
+- role: Cyber Network Defense Engineer
+  org: Command Post Technologies
+  location: Norfolk, VA
+  period: Jan 2024 – Jul 2024
+  summary: IDS/IPS sensors across federal networks, vulnerability analysis and STIG reporting with ACAS, HBSS, and Juniper SIEM.
+
+- role: Technical Cybersecurity Assessor, UNIX/Linux
+  org: AERMOR
+  location: Suffolk, VA
+  period: May 2023 – Nov 2023
+  summary: STIG and vulnerability assessments on RHEL systems, SCAP automation plus manual checks, authored the assessment reports and briefed findings to system owners.
+
+- role: Cyber Test Engineer, Red Team Support
+  org: AERMOR / OPTEVFOR
+  location: Norfolk, VA
+  period: Apr 2022 – May 2023
+  summary: Cyber test plans for Navy ship systems, including the CVN-78 cyber survivability test plan. OSINT and recon to shape red team objectives, attack vectors for shipboard Linux systems, on-site validation with the operators.
