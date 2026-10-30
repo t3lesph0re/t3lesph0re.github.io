@@ -26,6 +26,7 @@ layout: default
   <a href="#projects">projects</a>
   <a href="#writing">writing</a>
   <a href="#certifications">certs</a>
+  {% if site.data.languages.size > 0 %}<a href="#programming">programming</a>{% endif %}
 </nav>
 
 {% if site.data.cves.size > 0 %}
@@ -38,8 +39,9 @@ layout: default
         {% if c.url %}<a href="{{ c.url }}" target="_blank" rel="noopener">{{ c.id }}</a>{% else %}{{ c.id }}{% endif %}
       </span>
       <div class="entry-body">
+        {% if c.logo %}<img class="cve-logo" src="{{ '/assets/images/cves/' | append: c.logo | relative_url }}" alt="{{ c.target }}" loading="lazy">{% endif %}
         <span class="entry-title">{{ c.target }}</span>
-        {% if c.severity %}<span class="tag">{{ c.severity }}</span>{% endif %}
+        {% if c.severity %}{% assign sev = c.severity | downcase %}{% if sev contains 'critical' %}{% assign sevclass = 'tag-critical' %}{% elsif sev contains 'high' %}{% assign sevclass = 'tag-high' %}{% elsif sev contains 'medium' %}{% assign sevclass = 'tag-medium' %}{% elsif sev contains 'low' %}{% assign sevclass = 'tag-low' %}{% else %}{% assign sevclass = '' %}{% endif %}<span class="tag {{ sevclass }}">{{ c.severity }}</span>{% endif %}
         <p class="entry-desc">{{ c.summary }}</p>
       </div>
     </li>
@@ -73,7 +75,10 @@ layout: default
   <ul class="entry-list">
     {% for job in site.data.experience %}
     <li class="entry">
-      <span class="entry-meta">{{ job.period }}</span>
+      <span class="entry-meta job-meta">
+        {% if job.logo %}<img class="job-logo" src="{{ '/assets/images/work/' | append: job.logo | relative_url }}" alt="{{ job.org }}" loading="lazy">{% endif %}
+        <span class="job-period">{{ job.period }}</span>
+      </span>
       <div class="entry-body">
         <span class="entry-title">{{ job.role }}</span>
         <span class="entry-sub">{{ job.org }}{% if job.location %}, {{ job.location }}{% endif %}</span>
@@ -90,7 +95,7 @@ layout: default
     {% for p in site.data.projects %}
     <li class="entry">
       <span class="entry-meta entry-id">
-        {% if p.url %}<a href="{{ p.url }}" target="_blank" rel="noopener">{{ p.name }}</a>{% else %}{{ p.name }}{% endif %}
+        {% if p.logo %}{% capture _plogo %}<img class="project-logo" src="{{ '/assets/images/' | append: p.logo | relative_url }}" alt="{{ p.name }}" loading="lazy">{% endcapture %}{% if p.url %}<a class="project-logo-link" href="{{ p.url }}" target="_blank" rel="noopener" title="{{ p.name }}">{{ _plogo }}</a>{% else %}{{ _plogo }}{% endif %}{% elsif p.url %}<a href="{{ p.url }}" target="_blank" rel="noopener">{{ p.name }}</a>{% else %}{{ p.name }}{% endif %}
       </span>
       <div class="entry-body">
         <p class="entry-desc">{{ p.summary }}</p>
@@ -127,11 +132,17 @@ layout: default
     {% for group in site.data.certs %}
     <li class="entry">
       <span class="entry-meta">{{ group.group }}</span>
-      <div class="entry-body tag-list">
+      <div class="entry-body badge-list">
         {% for cert in group.items %}
           {% assign cert_post = nil %}
           {% if cert.post_title %}{% assign cert_post = site.posts | where: "title", cert.post_title | first %}{% endif %}
-          {% if cert.url %}<a class="tag" href="{{ cert.url }}" target="_blank" rel="noopener">{{ cert.name }}</a>{% elsif cert_post %}<a class="tag" href="{{ cert_post.url | relative_url }}">{{ cert.name }}</a>{% else %}<span class="tag">{{ cert.name }}</span>{% endif %}
+          {% if cert.badge %}
+            {% if cert.badge contains '://' %}{% assign bsrc = cert.badge %}{% else %}{% capture bsrc %}{{ '/assets/images/certs/' | append: cert.badge | relative_url }}{% endcapture %}{% endif %}
+            {% capture bimg %}<img class="badge-img" src="{{ bsrc }}" alt="{{ cert.name }}" loading="lazy">{% endcapture %}
+            {% if cert.url %}<a class="badge" href="{{ cert.url }}" target="_blank" rel="noopener" title="{{ cert.name }}">{{ bimg }}</a>{% elsif cert_post %}<a class="badge" href="{{ cert_post.url | relative_url }}" title="{{ cert.name }}">{{ bimg }}</a>{% else %}<span class="badge" title="{{ cert.name }}">{{ bimg }}</span>{% endif %}
+          {% else %}
+            {% if cert.url %}<a class="tag" href="{{ cert.url }}" target="_blank" rel="noopener">{{ cert.name }}</a>{% elsif cert_post %}<a class="tag" href="{{ cert_post.url | relative_url }}">{{ cert.name }}</a>{% else %}<span class="tag">{{ cert.name }}</span>{% endif %}
+          {% endif %}
         {% endfor %}
       </div>
     </li>
@@ -139,12 +150,35 @@ layout: default
   </ul>
 </section>
 
+{% if site.data.languages.size > 0 %}
+<section class="section" id="programming">
+  <h2 class="section-label">programming</h2>
+  <div class="lang-list">
+    {% for l in site.data.languages %}
+      {% capture logo_src %}{{ '/assets/images/lang/' | append: l.logo | relative_url }}{% endcapture %}
+      {% if l.url %}
+      <a class="lang" href="{{ l.url }}" target="_blank" rel="noopener" title="{{ l.name }}" aria-label="{{ l.name }}">
+        <img class="lang-logo" src="{{ logo_src }}" alt="{{ l.name }}" width="28" height="28" loading="lazy">
+      </a>
+      {% else %}
+      <span class="lang" title="{{ l.name }}">
+        <img class="lang-logo" src="{{ logo_src }}" alt="{{ l.name }}" width="28" height="28" loading="lazy">
+      </span>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
 <section class="section" id="education">
   <h2 class="section-label">education</h2>
   <ul class="entry-list">
     {% for e in site.data.education %}
     <li class="entry">
-      <span class="entry-meta">{{ e.year }}</span>
+      <span class="entry-meta edu-meta">
+        {% if e.logo %}{% capture _edulogo %}<img class="edu-logo" src="{{ '/assets/images/edu/' | append: e.logo | relative_url }}" alt="{{ e.school }}" width="34" height="34" loading="lazy">{% endcapture %}{% if e.school_url %}<a class="edu-logo-link" href="{{ e.school_url }}" target="_blank" rel="noopener" title="{{ e.school }}">{{ _edulogo }}</a>{% else %}{{ _edulogo }}{% endif %}{% endif %}
+        <span class="edu-year">{{ e.year }}</span>
+      </span>
       <div class="entry-body">
         <span class="entry-title">{{ e.degree }}</span>
         <span class="entry-sub">{{ e.school }}</span>

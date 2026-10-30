@@ -5,4 +5,5 @@
 
 - name: Deep Woods Security
   url: https://deepwoodssec.com
+  logo: deep-woods.svg
   summary: Independent offensive security research outfit I founded. Supply chain, on-chain infrastructure, and AI systems. We find the routes first and publish what we learn.

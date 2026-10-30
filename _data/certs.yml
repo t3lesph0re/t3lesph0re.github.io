@@ -1,27 +1,40 @@
-# url         links the tag to the credential verification page (opens in a new tab)
+# url         links the badge/tag to the credential verification page (opens in a new tab)
 # post_title  the blog post with that exact title; used as the link when there is no url,
 #             and always used to hide that post from the writing list and the archive
+# badge       image in assets/images/certs/ (filename), OR a full https URL to hotlink.
+#             When set, the badge image renders instead of the text tag.
 - group: offensive
   items:
     - name: OSCP+
       url: https://credentials.offsec.com/ce35b928-4938-4356-8822-af307e760ce4
       post_title: "OSCP+"
+      badge: oscp.png
     - name: CRTO
       url: https://certs.zeropointsecurity.co.uk/b7b06875-e2ad-4c0c-92f2-ee13bd2b6019#acc.oiZMeEDC
       post_title: "CRTO"
+      badge: https://eu.api.accredible.com/v1/credentials/1xywkhzn/artifact/badge
     - name: CRTL
       url: https://certs.zeropointsecurity.co.uk/553bd935-4ca1-4ae0-9fbf-092d2561efca
       post_title: "CRTL"
-    - name: CEH
+      badge: https://eu.api.accredible.com/v1/credentials/orx5xstz/artifact/badge
     - name: eJPT
+      badge: ejpt.svg
 
 - group: foundational
   items:
     - name: CCNA
+      badge: ccna.png
     - name: Security+
+      badge: security-plus.png
     - name: Network+
+      badge: network-plus.png
     - name: Linux+
+      badge: linux-plus.png
     - name: Cloud+
+      badge: cloud-plus.png
     - name: Server+
+      badge: server-plus.png
     - name: A+
+      badge: aplus.png
     - name: OpenEDG Python
+      badge: pcep.png

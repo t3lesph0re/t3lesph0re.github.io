@@ -1,0 +1,9 @@
+# Programming languages. Shown in the "languages" section (hidden while empty).
+# Logos live in assets/images/lang/ (Devicon SVGs).
+# Fields: name, logo (filename in assets/images/lang/), url (optional link).
+- name: C
+  logo: c.svg
+  url: https://en.cppreference.com/w/c
+- name: Python
+  logo: python.svg
+  url: https://docs.python.org/3/

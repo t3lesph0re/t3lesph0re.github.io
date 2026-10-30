@@ -889,6 +889,62 @@ a.tag:hover {
   padding-top: 0.1rem;
 }
 
+/* ===== Severity-colored CVE tags ===== */
+/* Keyword in cves.yml `severity` (critical/high/medium/low) picks the color. */
+.tag-critical      { color: #b02a37; background: rgba(176, 42, 55, 0.09); }
+a.tag-critical:hover { background: rgba(176, 42, 55, 0.16); }
+.tag-high          { color: #bf5a1e; background: rgba(191, 90, 30, 0.10); }
+a.tag-high:hover   { background: rgba(191, 90, 30, 0.17); }
+.tag-medium        { color: #8a6a12; background: rgba(138, 106, 18, 0.11); }
+a.tag-medium:hover { background: rgba(138, 106, 18, 0.18); }
+.tag-low           { color: #3e7a6e; background: rgba(62, 122, 110, 0.10); }
+a.tag-low:hover    { background: rgba(62, 122, 110, 0.17); }
+
+/* ===== Languages ===== */
+.lang-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding-top: 0.3rem;
+}
+.lang {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.lang-logo {
+  width: 28px;
+  height: 28px;
+  display: block;
+  flex: none;
+  margin: 0;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+a.lang:hover .lang-logo { transform: scale(1.08); filter: drop-shadow(0 2px 7px rgba(62, 122, 110, 0.3)); }
+
+/* ===== Education school logo ===== */
+.edu-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  opacity: 1;
+}
+.edu-year { opacity: 0.5; }
+.edu-logo {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: block;
+  margin: 0;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+a.edu-logo-link { display: inline-flex; text-decoration: none; }
+a.edu-logo-link:hover .edu-logo {
+  transform: scale(1.08);
+  filter: drop-shadow(0 2px 7px rgba(62, 122, 110, 0.35));
+}
+
 /* ===== Mobile ===== */
 @media (max-width: 600px) {
   .entry {
@@ -940,4 +996,71 @@ a.tag:hover {
     width: 88px;
     height: 88px;
   }
+}
+
+/* ===== Certification badges ===== */
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.1rem;
+  align-items: center;
+  padding-top: 0.25rem;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.badge-img {
+  height: 58px;
+  width: auto;
+  margin: 0;
+  display: block;
+  border-radius: 0;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.badge:hover .badge-img {
+  transform: translateY(-2px) scale(1.04);
+  filter: drop-shadow(0 4px 11px rgba(62, 122, 110, 0.28));
+}
+
+/* ===== Project logo (Deep Woods Security) ===== */
+.project-logo-link { display: inline-block; text-decoration: none; }
+.project-logo {
+  width: 155px;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.project-logo-link:hover .project-logo {
+  transform: scale(1.04);
+  filter: drop-shadow(0 3px 9px rgba(38, 38, 38, 0.22));
+}
+
+/* ===== Experience company logos ===== */
+.job-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  opacity: 1;
+}
+.job-period { opacity: 0.5; }
+.job-logo {
+  height: 30px;
+  width: auto;
+  max-width: 150px;
+  margin: 0;
+  display: block;
+}
+
+/* ===== CVE product logo ===== */
+.cve-logo {
+  height: 26px;
+  width: auto;
+  max-width: 65%;
+  margin: 0 0 0.55rem;
+  display: block;
 }
