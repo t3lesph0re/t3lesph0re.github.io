@@ -1064,3 +1064,11 @@ a.edu-logo-link:hover .edu-logo {
   margin: 0 0 0.55rem;
   display: block;
 }
+
+/* ===== CAE-CD designation ===== */
+.edu-cae {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+.edu-cae:hover { text-decoration: underline; }

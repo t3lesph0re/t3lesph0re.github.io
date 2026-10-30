@@ -181,7 +181,7 @@ layout: default
       </span>
       <div class="entry-body">
         <span class="entry-title">{{ e.degree }}</span>
-        <span class="entry-sub">{{ e.school }}</span>
+        <span class="entry-sub">{{ e.school }}{% if e.cae %} · <a class="edu-cae" href="{{ e.cae }}" target="_blank" rel="noopener" title="NSA National Center of Academic Excellence in Cyber Defense — designated 2023, valid through AY2028">NSA CAE-CD</a>{% endif %}</span>
       </div>
     </li>
     {% endfor %}
