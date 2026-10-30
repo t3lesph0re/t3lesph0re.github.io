@@ -5,6 +5,7 @@
 - id: CVE-2026-36522
   target: ArduPilot ArduPlane 4.0.1
   logo: ardupilot.png
+  logo_url: https://ardupilot.org
   summary: NaN injection through the MAVLink PARAM_SET message (CWE-1287). Denial of service where floating-point exceptions are enabled, and silent corruption of flight parameters on production hardware.
   severity: 9.1 critical
   url: https://github.com/deepwoodssec/CVE-2026-36522
