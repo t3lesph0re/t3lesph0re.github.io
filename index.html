@@ -35,11 +35,11 @@ layout: default
   <ul class="entry-list">
     {% for c in site.data.cves %}
     <li class="entry">
-      <span class="entry-meta entry-id">
+      <span class="entry-meta entry-id cve-meta">
+        {% if c.logo %}{% capture _cvelogo %}<img class="cve-logo" src="{{ '/assets/images/cves/' | append: c.logo | relative_url }}" alt="{{ c.target }}" loading="lazy">{% endcapture %}{% if c.logo_url %}<a class="cve-logo-link" href="{{ c.logo_url }}" target="_blank" rel="noopener" title="{{ c.target }}">{{ _cvelogo }}</a>{% else %}{{ _cvelogo }}{% endif %}{% endif %}
         {% if c.url %}<a href="{{ c.url }}" target="_blank" rel="noopener">{{ c.id }}</a>{% else %}{{ c.id }}{% endif %}
       </span>
       <div class="entry-body">
-        {% if c.logo %}{% capture _cvelogo %}<img class="cve-logo" src="{{ '/assets/images/cves/' | append: c.logo | relative_url }}" alt="{{ c.target }}" loading="lazy">{% endcapture %}{% if c.logo_url %}<a class="cve-logo-link" href="{{ c.logo_url }}" target="_blank" rel="noopener" title="{{ c.target }}">{{ _cvelogo }}</a>{% else %}{{ _cvelogo }}{% endif %}{% endif %}
         <span class="entry-title">{{ c.target }}</span>
         {% if c.severity %}{% assign sev = c.severity | downcase %}{% if sev contains 'critical' %}{% assign sevclass = 'tag-critical' %}{% elsif sev contains 'high' %}{% assign sevclass = 'tag-high' %}{% elsif sev contains 'medium' %}{% assign sevclass = 'tag-medium' %}{% elsif sev contains 'low' %}{% assign sevclass = 'tag-low' %}{% else %}{% assign sevclass = '' %}{% endif %}<span class="tag {{ sevclass }}">{{ c.severity }}</span>{% endif %}
         <p class="entry-desc">{{ c.summary }}</p>
