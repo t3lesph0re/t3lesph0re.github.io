@@ -206,7 +206,7 @@ figure.highlight,
 div.highlight {
   background: transparent;
   color: var(--code-text);
-  border-radius: 12px;
+  border-radius: 6px;
   margin: 1.5rem 0;
   padding: 0;
   overflow: visible;
@@ -218,16 +218,13 @@ pre {
   box-sizing: border-box;
   padding: 1.15rem 1.35rem;
   margin: 0;
-  background: linear-gradient(180deg, rgba(41, 45, 60, 0.88) 0%, rgba(24, 26, 36, 0.94) 100%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-  backdrop-filter: blur(20px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 32px rgba(18, 20, 30, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: #1f2328;
+  border: 1px solid #30363d;
   color: #e6e9ef;
   font: 0.85rem/1.6 'JetBrains Mono', monospace;
   white-space: pre;
   overflow-x: auto;
-  border-radius: 12px;
+  border-radius: 6px;
 }
 
 /* Scrollbar for code blocks */
@@ -393,8 +390,108 @@ pre code {
   font-weight: 500;
 }
 .cli-output {
-  color: #8a90a6;
+  color: #adb5c2;
 }
+
+/* ===== Code Blocks (GitHub style, code languages only) =====
+   code-enhance.js adds .code-block. CLI blocks keep the dark look above. */
+.code-block {
+  --code-bg: #f6f8fa;
+  --code-text: #1f2328;
+  --code-border: #d0d7de;
+  --code-muted: #59636e;
+}
+.code-block pre {
+  display: flex;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  padding-left: 0;
+  background: var(--code-bg);
+  border-color: var(--code-border);
+  color: var(--code-text);
+  line-height: 1.5;
+  scrollbar-color: rgba(31, 35, 40, 0.2) transparent;
+}
+.code-block pre::-webkit-scrollbar-thumb { background: rgba(31, 35, 40, 0.2); }
+.code-block pre::-webkit-scrollbar-thumb:hover { background: rgba(31, 35, 40, 0.35); }
+.code-block pre code {
+  flex: none;
+}
+.code-lines {
+  position: sticky;
+  left: 0;
+  flex: none;
+  margin-right: 1rem;
+  padding: 0 0.85rem 0 1rem;
+  background: var(--code-bg);
+  border-right: 1px solid var(--code-border);
+  color: var(--code-muted);
+  text-align: right;
+  white-space: pre;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.code-block .code-copy {
+  background: var(--code-bg);
+  border-color: var(--code-border);
+  color: var(--code-muted);
+  border-radius: 6px;
+}
+.code-block .code-copy:hover {
+  background: #eaeef2;
+  color: var(--code-text);
+}
+.code-block .code-copy.copied {
+  color: #1a7f37;
+}
+
+/* GitHub Light tokens */
+.code-block .highlight .c,
+.code-block .highlight .c1,
+.code-block .highlight .cm,
+.code-block .highlight .cs { color: #59636e; font-style: normal; }
+.code-block .highlight .k,
+.code-block .highlight .kd,
+.code-block .highlight .kn,
+.code-block .highlight .kp,
+.code-block .highlight .kr,
+.code-block .highlight .kt,
+.code-block .highlight .cp,
+.code-block .highlight .ow { color: #cf222e; }
+.code-block .highlight .s,
+.code-block .highlight .s1,
+.code-block .highlight .s2,
+.code-block .highlight .sb,
+.code-block .highlight .sc,
+.code-block .highlight .sd,
+.code-block .highlight .se,
+.code-block .highlight .sh,
+.code-block .highlight .sx,
+.code-block .highlight .cpf { color: #0a3069; }
+.code-block .highlight .na,
+.code-block .highlight .nb,
+.code-block .highlight .no,
+.code-block .highlight .m,
+.code-block .highlight .mb,
+.code-block .highlight .mi,
+.code-block .highlight .mf,
+.code-block .highlight .mh,
+.code-block .highlight .mo,
+.code-block .highlight .il { color: #0550ae; }
+.code-block .highlight .nc,
+.code-block .highlight .nn,
+.code-block .highlight .nf,
+.code-block .highlight .fm { color: #8250df; }
+.code-block .highlight .nv,
+.code-block .highlight .vc,
+.code-block .highlight .vg,
+.code-block .highlight .vi { color: #953800; }
+.code-block .highlight .nt { color: #116329; }
+.code-block .highlight .o,
+.code-block .highlight .p { color: inherit; }
+.code-block .highlight .gd { color: #82071e; background: #ffebe9; }
+.code-block .highlight .gi { color: #116329; background: #dafbe1; }
+.code-block .highlight .err { color: #cf222e; }
 
 /* ===========================================================
    Blog additions

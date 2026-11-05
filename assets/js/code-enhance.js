@@ -1,14 +1,16 @@
 /**
  * code-enhance.js
- * Prompt highlighting + copy (commands only) for Jekyll/Rouge code blocks.
+ * CLI blocks: prompt highlighting + copy (commands only).
+ * Code blocks: GitHub style with line numbers + copy (whole block).
  * Works with: .highlighter-rouge > .highlight > pre > code
  * No dependencies.
  */
 (function () {
   'use strict';
 
-  var WIN_PROMPT = /^([A-Z]:\\[^>]*>)(.*)$/;
-  var NIX_PROMPT = /^(\$|#)\s(.*)$/;
+  var WIN_PROMPT = /^((?:PS )?[A-Z]:\\[^>]*>\s?)(.*)$/;
+  var NIX_PROMPT = /^(\s*[\w.-]+@[\w.-]+:\S*[$#]\s|[$#]\s)(.*)$/;
+  var CLI_LANGS = /^(text|plaintext|bash|shell|console|powershell|ps1|batch|cmd)$/i;
 
   function extractCommands(text) {
     var cmds = [];
@@ -29,6 +31,22 @@
 
     var text = raw.textContent;
 
+    // --- Code languages get the GitHub look; everything else stays CLI ---
+    var lang = container.className.match(/(?:^|\s)language-([\w+-]+)/);
+    var isCode = !!(pre && code && lang && !CLI_LANGS.test(lang[1]));
+
+    if (isCode) {
+      var count = text.replace(/\n$/, '').split('\n').length;
+      var nums = [];
+      for (var n = 1; n <= count; n++) nums.push(n);
+      var gutter = document.createElement('span');
+      gutter.className = 'code-lines';
+      gutter.setAttribute('aria-hidden', 'true');
+      gutter.textContent = nums.join('\n');
+      container.classList.add('code-block');
+      pre.insertBefore(gutter, code);
+    }
+
     // Make the Rouge wrapper the positioning anchor
     container.style.position = 'relative';
 
@@ -43,7 +61,7 @@
       '</svg>';
 
     btn.addEventListener('click', function () {
-      var copyText = extractCommands(text);
+      var copyText = isCode ? text : extractCommands(text);
       navigator.clipboard.writeText(copyText).then(function () {
         btn.classList.add('copied');
         btn.innerHTML =
@@ -63,7 +81,9 @@
 
     container.appendChild(btn);
 
-    // --- Prompt highlighting ---
+    // --- Prompt highlighting (CLI blocks only) ---
+    if (isCode) return;
+
     var lines = text.split('\n');
     var hasPrompt = lines.some(function (l) {
       return WIN_PROMPT.test(l) || NIX_PROMPT.test(l);
@@ -89,7 +109,7 @@
       } else if (nixMatch) {
         var ps2 = document.createElement('span');
         ps2.className = 'cli-prompt';
-        ps2.textContent = nixMatch[1] + ' ';
+        ps2.textContent = nixMatch[1];
         var cs2 = document.createElement('span');
         cs2.className = 'cli-cmd';
         cs2.textContent = nixMatch[2];
