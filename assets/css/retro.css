@@ -305,3 +305,8 @@ pre code { background:transparent; border:0; padding:0; color:inherit; font-size
 }
 
 .lang-text{ font-family:"Courier New",Consolas,monospace; font-size:12px; margin:4px 0; }
+
+/* PGP signature block at the foot of each post (BugTraq style) */
+.pgp-sig { margin-top:30px; border-top:1px solid #ddd; padding-top:14px; }
+.pgp-sig .pgp-meta { font-family:"Courier New",Consolas,monospace; font-size:11px; color:#6b6b63; margin-bottom:6px; }
+.pgp-sig .pgp-block { font-family:"Courier New",Consolas,monospace; font-size:10px; line-height:1.35; color:#6b6b63; background:#efeee7; border:1px solid #d3d0c4; padding:8px 10px; overflow:auto; white-space:pre; border-radius:0; }

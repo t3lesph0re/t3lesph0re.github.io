@@ -17,6 +17,13 @@ layout: default
     </div>
 
     {{ content }}
+
+    {% assign sigkey = page.path | split: "/" | last %}{% assign sig = site.data.signatures[sigkey] %}{% if sig %}
+    <div class="pgp-sig">
+      <div class="pgp-meta">PGP signed by {{ site.title }} - <a href="{{ '/sig/' | append: sigkey | append: '.asc' | relative_url }}">{{ sigkey }}.asc</a> - <a href="{{ site.pgp.key_url | relative_url }}">public key</a></div>
+      <pre class="pgp-block">{{ sig }}</pre>
+    </div>
+    {% endif %}
   </article>
 </div>
 

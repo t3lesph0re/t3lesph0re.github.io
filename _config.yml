@@ -14,3 +14,7 @@ rouge:
 
 plugins:
   - jekyll-redirect-from
+
+pgp:
+  fingerprint: "9C9A 2284 DFBD 39E7 8AF6  5EB8 45C5 EDBB 4236 E1E5"
+  key_url: "/pgp.asc"

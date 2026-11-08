@@ -5,3 +5,9 @@ _site/
 .jekyll-metadata
 prompt.txt
 .DS_Store
+
+# never commit private key material
+*.rev
+*secret*.asc
+*private*.asc
+secring.*
