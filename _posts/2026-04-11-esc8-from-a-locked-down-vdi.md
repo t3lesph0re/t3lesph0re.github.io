@@ -10,7 +10,7 @@ redirect_from:
 
 The foothold was an Amazon WorkSpaces VDI. Local admin on the box, CrowdStrike and Splunk in the path, Zscaler in front of anything that looked like the internet. No Kali on the other end of a VPN, no flat network, no friendly listener on 445. The attacker host and the relay host were the same machine, and that machine was Windows.
 
-This is the writeup of how ESC8 still worked, what I had to patch to get there, and the thing that cost me a day before I figured out the answer wasn't to fight the kernel.
+This is how ESC8 still worked, what I patched to get there, and the day I lost before I stopped fighting the kernel.
 
 ## what ESC8 is
 
@@ -38,7 +38,7 @@ Before any of the patching and relaying, the finding that made this chain possib
   <figcaption>subCA with /certsrv/ reachable over plain HTTP.</figcaption>
 </figure>
 
-Web Enrollment, plain HTTP, NTLM auth accepted. That's the ESC8 precondition. Everything that follows is the plumbing required to turn that finding into a certificate issued to the DC machine account.
+Web Enrollment, plain HTTP, NTLM auth accepted. That's the ESC8 precondition. The rest of this post is turning it into a certificate for the DC machine account.
 
 ## AMSI
 
@@ -344,4 +344,4 @@ Loot stays on `D:\`, out of the wipe path, where it was the whole time.
 
 ## Notes
 
-None of the tools in this chain are novel. PetitPotam, ntlmrelayx, Rubeus, StreamDivert, all public, all documented. What took the time was the environment. Embedded Python because I couldn't install anything, source patches because 0.11.0 doesn't expose the flag I needed, and the WFP redirect because I wasn't willing to break the VDI twice. The interesting part of pentesting is almost never the exploit. It's the hour you spend figuring out why the exploit doesn't fit the box you're standing on, and what layer underneath it you can use instead.
+None of the tools in this chain are novel. PetitPotam, ntlmrelayx, Rubeus, StreamDivert, all public, all documented. What took the time was the environment. Embedded Python because I couldn't install anything, source patches because 0.11.0 doesn't expose the flag I needed, and the WFP redirect because I wasn't willing to break the VDI twice. The exploit was never the hard part. Making it fit the box was.

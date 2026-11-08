@@ -8,10 +8,6 @@ redirect_from:
   - /pentesting/2026/07/31/the-ten-pillars/
 ---
 
-<figure>
-  <img src="{{ '/assets/images/ten-pillars-cover.png' | relative_url }}" alt="Cover illustration: a cracked Doric column standing on broken ground, with a spear leaning against it, tip rising above the capital. Title reads The Ten Pillars of the Elite Operator, by Sebastien Arseneault." />
-</figure>
-
 ## Entropy
 
 Time tells all, and time takes all. Every system decays toward disorder. This is not opinion. It is law. Hardware ages. Software rots. What was secure on Monday is a vulnerability by Friday. Vendor support lapses, new techniques arrive, old assumptions break. Nothing built on the surface will last.

@@ -5,7 +5,7 @@ layout: default
 <div class="msgbox profile">
   <div class="mugshot"><img src="{{ '/assets/images/portrait.jpg' | relative_url }}" alt="{{ site.title }}" width="82" height="82"></div>
   <div class="name">Sebastien Arseneault <span class="handle">(t3lesph0re)</span></div>
-  <p class="profile-bio">Founder of Deep Woods Security. Focused on offensive security and counter-UAS cybersecurity research.</p>
+  <p class="profile-bio">Founder of Deep Woods Security. Offensive security and counter-UAS research.</p>
   <div class="links">
     [<a href="https://github.com/t3lesph0re" target="_blank" rel="noopener">github</a>]
     [<a href="https://www.linkedin.com/in/sebastien-arseneault/" target="_blank" rel="noopener">linkedin</a>]
@@ -26,6 +26,25 @@ layout: default
   {% endfor %}
 </table>
 {% endif %}
+
+<div class="blockhdr" id="writing">:: writing</div>
+{% assign linked_titles = "" | split: "" %}
+{% for group in site.data.certs %}{% for c in group.items %}{% if c.post_title %}{% assign linked_titles = linked_titles | push: c.post_title %}{% endif %}{% endfor %}{% endfor %}
+{% for p in site.data.projects %}{% if p.post_title %}{% assign linked_titles = linked_titles | push: p.post_title %}{% endif %}{% endfor %}
+{% assign shown = 0 %}
+<table class="listing">
+  <tr><th style="width:110px;">date</th><th>subject</th></tr>
+  {% for post in site.posts %}
+  {% unless linked_titles contains post.title %}{% if shown < 5 %}
+  <tr>
+    <td class="date">{{ post.date | date: "%Y-%m-%d" }}</td>
+    <td class="subj"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></td>
+  </tr>
+  {% assign shown = shown | plus: 1 %}
+  {% endif %}{% endunless %}
+  {% endfor %}
+</table>
+<div class="all-posts"><a href="{{ '/archive' | relative_url }}">[ all posts ]</a></div>
 
 <div class="blockhdr" id="experience">:: experience</div>
 <table class="listing">
@@ -50,26 +69,25 @@ layout: default
   {% endfor %}
 </table>
 
-<div class="blockhdr" id="writing">:: writing</div>
-{% assign linked_titles = "" | split: "" %}
-{% for group in site.data.certs %}{% for c in group.items %}{% if c.post_title %}{% assign linked_titles = linked_titles | push: c.post_title %}{% endif %}{% endfor %}{% endfor %}
-{% for p in site.data.projects %}{% if p.post_title %}{% assign linked_titles = linked_titles | push: p.post_title %}{% endif %}{% endfor %}
-{% assign shown = 0 %}
-<table class="listing">
-  <tr><th style="width:110px;">date</th><th>subject</th></tr>
-  {% for post in site.posts %}
-  {% unless linked_titles contains post.title %}{% if shown < 5 %}
-  <tr>
-    <td class="date">{{ post.date | date: "%Y-%m-%d" }}</td>
-    <td class="subj"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></td>
-  </tr>
-  {% assign shown = shown | plus: 1 %}
-  {% endif %}{% endunless %}
-  {% endfor %}
-</table>
-<div class="all-posts"><a href="{{ '/archive' | relative_url }}">[ all posts ]</a></div>
-
 <div class="blockhdr" id="certifications">:: certifications</div>
 <div class="tags">
   {% for group in site.data.certs %}{% for cert in group.items %}<span>{{ cert.name }}</span>{% endfor %}{% endfor %}
 </div>
+
+{% if site.data.languages.size > 0 %}
+<div class="blockhdr" id="programming">:: programming</div>
+<p class="lang-text">{% for l in site.data.languages %}{% if l.url %}<a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.name }}</a>{% else %}{{ l.name }}{% endif %}{% unless forloop.last %} | {% endunless %}{% endfor %}</p>
+{% endif %}
+
+<div class="blockhdr" id="education">:: education</div>
+<table class="listing">
+  <tr><th style="width:150px;">year</th><th>degree</th><th>school</th></tr>
+  {% assign seen_schools = "" | split: "" %}
+  {% for e in site.data.education %}
+  <tr>
+    <td class="date">{{ e.year }}</td>
+    <td class="subj">{{ e.degree }}</td>
+    <td>{% if e.school_url and e.school %}{% unless seen_schools contains e.school %}<a href="{{ e.school_url }}" target="_blank" rel="noopener">{{ e.school }}</a>{% assign seen_schools = seen_schools | push: e.school %}{% else %}{{ e.school }}{% endunless %}{% else %}{{ e.school }}{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
