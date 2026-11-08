@@ -20,7 +20,7 @@ The certificate is the payload. Once you hold a certificate issued under the `Do
 
 <figure>
   <img src="{{ '/assets/images/esc8-flow.svg' | relative_url }}" alt="ESC8 attack flow diagram. A top row shows the attacker VDI containing PetitPotam, StreamDivert plus ntlmrelayx, and Rubeus. A middle row shows the domain controller and the subCA Web Enrollment endpoint. Arrows show PetitPotam coercing the DC over EFSRPC, the DC authenticating over SMB to the VDI, ntlmrelayx relaying that auth to the subCA, the subCA returning a certificate for the DC machine account, Rubeus using the cert for PKINIT to pull the NT hash, and finally DCSync over DRSUAPI to dump NTDS." />
-  <figcaption>The full chain. Gray arrows are the victim traffic the attack captures. Green solid is attacker-controlled flow. Green dashed is the cert-based PKINIT step that turns the certificate into a TGT.</figcaption>
+  <figcaption>The full chain, numbered in order: coerce the DC, capture the auth, relay it to the sub-CA, get a cert for $DC$, PKINIT that cert into the NT hash, then DCSync.</figcaption>
 </figure>
 
 The chain has three moving parts. PetitPotam tells the DC to authenticate over SMB to `$ATTACKER_IP`. StreamDivert rewrites that inbound packet inside the kernel so it lands on port 8445 instead of 445, because 445 is owned by the Windows SMB driver and you can't bind a userland socket there. ntlmrelayx listens on 8445, catches the relayed authentication, and forwards it to the subCA's HTTP enrollment endpoint under the `DomainController` template. Certificate comes back. Rubeus turns it into a TGT, extracts the hash. secretsdump finishes the job.
