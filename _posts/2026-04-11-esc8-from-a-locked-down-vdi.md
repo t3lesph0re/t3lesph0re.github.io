@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "ESC8 from a locked-down VDI"
-date: 2026-04-11
+date: 2026-04-11 22:04:55 -0500
 category: tradecraft
 redirect_from:
   - /pentesting/2026/04/11/esc8-from-a-locked-down-vdi.html

@@ -1,0 +1,29 @@
+direction: down
+
+classes: {
+  box: {
+    style: { fill: "#ffffff"; stroke: "#333333"; border-radius: 0; font-color: "#1f1e1a" }
+  }
+}
+
+vdi: ATTACKER VDI {
+  style: { fill: "#f4f3ee"; stroke: "#9a978b"; stroke-dash: 3; border-radius: 0; font-color: "#6b6b63" }
+  pp: PetitPotam { class: box }
+  nr: ntlmrelayx + StreamDivert { class: box }
+  ru: Rubeus { class: box }
+}
+
+dc:   Domain Controller { class: box }
+ca:   sub-CA /certsrv/ { class: box }
+loot: secretsdump -> NTDS.dit {
+  style: { fill: "#eef3ef"; stroke: "#2d6a4f"; border-radius: 0; font-color: "#1f4a38"; bold: true }
+}
+
+vdi.pp -> dc:   1 coerce
+dc -> vdi.nr:   2 captured NTLM/SMB
+vdi.nr -> ca:   3 relay
+ca -> vdi.ru:   4 cert
+vdi.ru -> loot: 5 PKINIT -> NT hash
+loot -> dc:     6 DCSync
+
+(* -> *)[*].style.stroke: "#2d6a4f"

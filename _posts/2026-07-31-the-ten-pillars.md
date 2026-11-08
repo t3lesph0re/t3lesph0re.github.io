@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The Ten Pillars of the Elite Operator"
-date: 2026-07-31
+date: 2026-07-31 21:20:25 -0500
 category: tradecraft
 redirect_from:
   - /pentesting/2026/07/31/the-ten-pillars.html

@@ -7,9 +7,9 @@ layout: default
   <div class="name">Sebastien Arseneault <span class="handle">(t3lesph0re)</span></div>
   <p class="profile-bio">Founder of Deep Woods Security. Offensive security and counter-UAS research.</p>
   <div class="links">
-    [<a href="https://github.com/t3lesph0re" target="_blank" rel="noopener">github</a>]
-    [<a href="https://www.linkedin.com/in/sebastien-arseneault/" target="_blank" rel="noopener">linkedin</a>]
-    [<a href="https://deepwoodssec.com" target="_blank" rel="noopener">deepwoodssec.com</a>]
+    [ <a href="https://github.com/t3lesph0re" target="_blank" rel="noopener">github</a> ]
+    [ <a href="https://www.linkedin.com/in/sebastien-arseneault/" target="_blank" rel="noopener">linkedin</a> ]
+    [ <a href="https://deepwoodssec.com" target="_blank" rel="noopener">deepwoodssec.com</a> ]
   </div>
 </div>
 
@@ -20,7 +20,7 @@ layout: default
   {% for c in site.data.cves %}
   <tr>
     <td class="id">{% if c.url %}<a href="{{ c.url }}" target="_blank" rel="noopener">{{ c.id }}</a>{% else %}{{ c.id }}{% endif %}</td>
-    <td class="subj"><strong>{{ c.target }}</strong>{% if c.summary %} {{ c.summary }}{% endif %}</td>
+    <td class="subj">{{ c.target }}</td>
     <td>{% if c.severity %}<span class="sev">{{ c.severity }}</span>{% endif %}</td>
   </tr>
   {% endfor %}

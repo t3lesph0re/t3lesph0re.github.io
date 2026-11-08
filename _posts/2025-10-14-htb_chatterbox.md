@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "HTB: Chatterbox Walkthrough"
+date: 2025-10-14 22:28:30 -0500
 category: walkthrough
 ---
 

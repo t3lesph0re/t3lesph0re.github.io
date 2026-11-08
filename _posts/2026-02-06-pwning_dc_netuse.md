@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Pwning a Domain Controller with net use"
+date: 2026-02-06 19:58:56 -0500
 category: tradecraft
 redirect_from:
   - /pentesting/2026/02/06/pwning_dc_netuse.html
