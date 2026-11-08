@@ -2,188 +2,74 @@
 layout: default
 ---
 
-<header class="hero">
-  <div class="hero-top">
-    <img class="hero-photo" src="{{ '/assets/images/portrait.jpg' | relative_url }}" alt="{{ site.title }}" width="104" height="104">
-    <div>
-      <h1 class="hero-name">{{ site.title }}</h1>
-      <p class="hero-handle">@{{ site.handle }}</p>
-    </div>
+<div class="msgbox profile">
+  <div class="mugshot"><img src="{{ '/assets/images/portrait.jpg' | relative_url }}" alt="{{ site.title }}" width="82" height="82"></div>
+  <div class="name">Sebastien Arseneault <span class="handle">(t3lesph0re)</span></div>
+  <p class="profile-bio">Founder of Deep Woods Security. Focused on offensive security and counter-UAS cybersecurity research.</p>
+  <div class="links">
+    [<a href="https://github.com/t3lesph0re" target="_blank" rel="noopener">github</a>]
+    [<a href="https://www.linkedin.com/in/sebastien-arseneault/" target="_blank" rel="noopener">linkedin</a>]
+    [<a href="https://deepwoodssec.com" target="_blank" rel="noopener">deepwoodssec.com</a>]
   </div>
-  <p class="hero-tagline">Founder of Deep Woods Security.</p>
-  <p class="hero-bio">Focused on offensive security and counter-UAS cybersecurity research.</p>
-  <ul class="hero-links">
-    <li><a href="https://github.com/t3lesph0re" target="_blank" rel="noopener">github</a></li>
-    <li><a href="https://www.linkedin.com/in/sebastien-arseneault/" target="_blank" rel="noopener">linkedin</a></li>
-    <li><a href="https://deepwoodssec.com" target="_blank" rel="noopener">deepwoodssec.com</a></li>
-  </ul>
-</header>
-
-<nav class="site-nav">
-  {% if site.data.cves.size > 0 %}<a href="#cves">cves</a>{% endif %}
-  {% if site.data.research.size > 0 %}<a href="#research">research</a>{% endif %}
-  <a href="#experience">experience</a>
-  <a href="#projects">projects</a>
-  <a href="#writing">writing</a>
-  <a href="#certifications">certs</a>
-  {% if site.data.languages.size > 0 %}<a href="#programming">programming</a>{% endif %}
-</nav>
+</div>
 
 {% if site.data.cves.size > 0 %}
-<section class="section" id="cves">
-  <h2 class="section-label">cves</h2>
-  <ul class="entry-list">
-    {% for c in site.data.cves %}
-    <li class="entry">
-      <span class="entry-meta entry-id cve-meta">
-        {% if c.logo %}{% capture _cvelogo %}<img class="cve-logo" src="{{ '/assets/images/cves/' | append: c.logo | relative_url }}" alt="{{ c.target }}" loading="lazy">{% endcapture %}{% if c.logo_url %}<a class="cve-logo-link" href="{{ c.logo_url }}" target="_blank" rel="noopener" title="{{ c.target }}">{{ _cvelogo }}</a>{% else %}{{ _cvelogo }}{% endif %}{% endif %}
-        {% if c.url %}<a href="{{ c.url }}" target="_blank" rel="noopener">{{ c.id }}</a>{% else %}{{ c.id }}{% endif %}
-      </span>
-      <div class="entry-body">
-        <span class="entry-title">{{ c.target }}</span>
-        {% if c.severity %}{% assign sev = c.severity | downcase %}{% if sev contains 'critical' %}{% assign sevclass = 'tag-critical' %}{% elsif sev contains 'high' %}{% assign sevclass = 'tag-high' %}{% elsif sev contains 'medium' %}{% assign sevclass = 'tag-medium' %}{% elsif sev contains 'low' %}{% assign sevclass = 'tag-low' %}{% else %}{% assign sevclass = '' %}{% endif %}<span class="tag {{ sevclass }}">{{ c.severity }}</span>{% endif %}
-        <p class="entry-desc">{{ c.summary }}</p>
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<div class="blockhdr" id="cves">:: cves</div>
+<table class="listing">
+  <tr><th style="width:150px;">id</th><th>target</th><th style="width:90px;">severity</th></tr>
+  {% for c in site.data.cves %}
+  <tr>
+    <td class="id">{% if c.url %}<a href="{{ c.url }}" target="_blank" rel="noopener">{{ c.id }}</a>{% else %}{{ c.id }}{% endif %}</td>
+    <td class="subj"><strong>{{ c.target }}</strong>{% if c.summary %} {{ c.summary }}{% endif %}</td>
+    <td>{% if c.severity %}<span class="sev">{{ c.severity }}</span>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
 {% endif %}
 
-{% if site.data.research.size > 0 %}
-<section class="section" id="research">
-  <h2 class="section-label">research</h2>
-  <ul class="entry-list">
-    {% for r in site.data.research %}
-    <li class="entry">
-      <span class="entry-meta entry-id">
-        {% if r.url %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.id }}</a>{% else %}{{ r.id }}{% endif %}
-      </span>
-      <div class="entry-body">
-        <span class="entry-title">{{ r.target }}</span>
-        {% if r.severity %}<span class="tag">{{ r.severity }}</span>{% endif %}
-        <p class="entry-desc">{{ r.summary }}</p>
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
+<div class="blockhdr" id="experience">:: experience</div>
+<table class="listing">
+  <tr><th style="width:150px;">period</th><th>role</th><th>org</th></tr>
+  {% for job in site.data.experience %}
+  <tr>
+    <td class="date">{{ job.period }}</td>
+    <td class="subj">{{ job.role }}</td>
+    <td>{{ job.org }}</td>
+  </tr>
+  {% endfor %}
+</table>
 
-<section class="section" id="experience">
-  <h2 class="section-label">experience</h2>
-  <ul class="entry-list">
-    {% for job in site.data.experience %}
-    <li class="entry">
-      <span class="entry-meta job-meta">
-        {% if job.logo %}<img class="job-logo" src="{{ '/assets/images/work/' | append: job.logo | relative_url }}" alt="{{ job.org }}" loading="lazy">{% endif %}
-        <span class="job-period">{{ job.period }}</span>
-      </span>
-      <div class="entry-body">
-        <span class="entry-title">{{ job.role }}</span>
-        <span class="entry-sub">{{ job.org }}{% if job.location %}, {{ job.location }}{% endif %}</span>
-        {% if job.summary %}<p class="entry-desc">{{ job.summary }}</p>{% endif %}
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<div class="blockhdr" id="projects">:: projects</div>
+<table class="listing">
+  <tr><th style="width:150px;">name</th><th>what</th></tr>
+  {% for p in site.data.projects %}
+  <tr>
+    <td class="id">{% if p.url %}<a href="{{ p.url }}" target="_blank" rel="noopener">{{ p.name }}</a>{% else %}{{ p.name }}{% endif %}</td>
+    <td class="subj">{{ p.summary }}</td>
+  </tr>
+  {% endfor %}
+</table>
 
-<section class="section" id="projects">
-  <h2 class="section-label">projects</h2>
-  <ul class="entry-list">
-    {% for p in site.data.projects %}
-    <li class="entry">
-      <span class="entry-meta entry-id">
-        {% if p.logo %}{% capture _plogo %}<img class="project-logo" src="{{ '/assets/images/' | append: p.logo | relative_url }}" alt="{{ p.name }}" loading="lazy">{% endcapture %}{% if p.url %}<a class="project-logo-link" href="{{ p.url }}" target="_blank" rel="noopener" title="{{ p.name }}">{{ _plogo }}</a>{% else %}{{ _plogo }}{% endif %}{% elsif p.url %}<a href="{{ p.url }}" target="_blank" rel="noopener">{{ p.name }}</a>{% else %}{{ p.name }}{% endif %}
-      </span>
-      <div class="entry-body">
-        <p class="entry-desc">{{ p.summary }}</p>
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<div class="blockhdr" id="writing">:: writing</div>
+{% assign linked_titles = "" | split: "" %}
+{% for group in site.data.certs %}{% for c in group.items %}{% if c.post_title %}{% assign linked_titles = linked_titles | push: c.post_title %}{% endif %}{% endfor %}{% endfor %}
+{% for p in site.data.projects %}{% if p.post_title %}{% assign linked_titles = linked_titles | push: p.post_title %}{% endif %}{% endfor %}
+{% assign shown = 0 %}
+<table class="listing">
+  <tr><th style="width:110px;">date</th><th>subject</th></tr>
+  {% for post in site.posts %}
+  {% unless linked_titles contains post.title %}{% if shown < 5 %}
+  <tr>
+    <td class="date">{{ post.date | date: "%Y-%m-%d" }}</td>
+    <td class="subj"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></td>
+  </tr>
+  {% assign shown = shown | plus: 1 %}
+  {% endif %}{% endunless %}
+  {% endfor %}
+</table>
+<div class="all-posts"><a href="{{ '/archive' | relative_url }}">[ all posts ]</a></div>
 
-<section class="section" id="writing">
-  <h2 class="section-label">writing</h2>
-  {% comment %} Posts already linked from the certifications tags or the projects list are skipped here. {% endcomment %}
-  {% assign linked_titles = "" | split: "" %}
-  {% for group in site.data.certs %}{% for c in group.items %}{% if c.post_title %}{% assign linked_titles = linked_titles | push: c.post_title %}{% endif %}{% endfor %}{% endfor %}
-  {% for p in site.data.projects %}{% if p.post_title %}{% assign linked_titles = linked_titles | push: p.post_title %}{% endif %}{% endfor %}
-  {% assign shown = 0 %}
-  <ul class="post-list">
-    {% for post in site.posts %}
-    {% unless linked_titles contains post.title %}{% if shown < 5 %}
-    <li>
-      <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-      <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    </li>
-    {% assign shown = shown | plus: 1 %}
-    {% endif %}{% endunless %}
-    {% endfor %}
-  </ul>
-  <p class="section-more"><a href="{{ '/archive' | relative_url }}">all posts</a></p>
-</section>
-
-<section class="section" id="certifications">
-  <h2 class="section-label">certifications</h2>
-  <ul class="entry-list">
-    {% for group in site.data.certs %}
-    <li class="entry">
-      <span class="entry-meta">{{ group.group }}</span>
-      <div class="entry-body badge-list">
-        {% for cert in group.items %}
-          {% assign cert_post = nil %}
-          {% if cert.post_title %}{% assign cert_post = site.posts | where: "title", cert.post_title | first %}{% endif %}
-          {% if cert.badge %}
-            {% if cert.badge contains '://' %}{% assign bsrc = cert.badge %}{% else %}{% capture bsrc %}{{ '/assets/images/certs/' | append: cert.badge | relative_url }}{% endcapture %}{% endif %}
-            {% capture bimg %}<img class="badge-img" src="{{ bsrc }}" alt="{{ cert.name }}" loading="lazy">{% endcapture %}
-            {% if cert.url %}<a class="badge" href="{{ cert.url }}" target="_blank" rel="noopener" title="{{ cert.name }}">{{ bimg }}</a>{% elsif cert_post %}<a class="badge" href="{{ cert_post.url | relative_url }}" title="{{ cert.name }}">{{ bimg }}</a>{% else %}<span class="badge" title="{{ cert.name }}">{{ bimg }}</span>{% endif %}
-          {% else %}
-            {% if cert.url %}<a class="tag" href="{{ cert.url }}" target="_blank" rel="noopener">{{ cert.name }}</a>{% elsif cert_post %}<a class="tag" href="{{ cert_post.url | relative_url }}">{{ cert.name }}</a>{% else %}<span class="tag">{{ cert.name }}</span>{% endif %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
-
-{% if site.data.languages.size > 0 %}
-<section class="section" id="programming">
-  <h2 class="section-label">programming</h2>
-  <div class="lang-list">
-    {% for l in site.data.languages %}
-      {% capture logo_src %}{{ '/assets/images/lang/' | append: l.logo | relative_url }}{% endcapture %}
-      {% if l.url %}
-      <a class="lang" href="{{ l.url }}" target="_blank" rel="noopener" title="{{ l.name }}" aria-label="{{ l.name }}">
-        <img class="lang-logo" src="{{ logo_src }}" alt="{{ l.name }}" width="28" height="28" loading="lazy">
-      </a>
-      {% else %}
-      <span class="lang" title="{{ l.name }}">
-        <img class="lang-logo" src="{{ logo_src }}" alt="{{ l.name }}" width="28" height="28" loading="lazy">
-      </span>
-      {% endif %}
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
-
-<section class="section" id="education">
-  <h2 class="section-label">education</h2>
-  <ul class="entry-list">
-    {% for e in site.data.education %}
-    <li class="entry">
-      <span class="entry-meta edu-meta">
-        {% if e.logo %}{% capture _edulogo %}<img class="edu-logo" src="{{ '/assets/images/edu/' | append: e.logo | relative_url }}" alt="{{ e.school }}" width="34" height="34" loading="lazy">{% endcapture %}{% if e.school_url %}<a class="edu-logo-link" href="{{ e.school_url }}" target="_blank" rel="noopener" title="{{ e.school }}">{{ _edulogo }}</a>{% else %}{{ _edulogo }}{% endif %}{% endif %}
-        <span class="edu-year">{{ e.year }}</span>
-      </span>
-      <div class="entry-body">
-        <span class="entry-title">{{ e.degree }}</span>
-        <span class="entry-sub">{{ e.school }}{% if e.cae %} · <a class="edu-cae" href="{{ e.cae }}" target="_blank" rel="noopener" title="NSA National Center of Academic Excellence in Cyber Defense — designated 2023, valid through AY2028">NSA CAE-CD</a>{% endif %}</span>
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+<div class="blockhdr" id="certifications">:: certifications</div>
+<div class="tags">
+  {% for group in site.data.certs %}{% for cert in group.items %}<span>{{ cert.name }}</span>{% endfor %}{% endfor %}
+</div>

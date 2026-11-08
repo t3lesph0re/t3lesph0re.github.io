@@ -1,0 +1,290 @@
+/* ============================================================
+   retro.css — early-2000s SecurityFocus/BugTraq theme
+   Drop-in alternate theme for t3lesph0re.github.io.
+
+   Your original custom.css is UNTOUCHED on disk. This file is
+   loaded in place of it via the <link> in _layouts/default.html.
+
+   TO REVERT to your normal site:
+     1. In _layouts/default.html, point the stylesheet <link> back
+        at custom.css instead of retro.css.
+     2. Remove the <header class="rb-top"> ... </header> block.
+     3. (optional) restore the code-enhance.js <script> tag.
+   Or just: git checkout -- _layouts/default.html  &&  rm assets/css/retro.css
+   ============================================================ */
+
+:root{
+  --rb-green-top:#3e8468; --rb-green:#2d6a4f; --rb-green-dk:#1e4a38;
+  --rb-ink:#111; --rb-link:#0000cc; --rb-link-v:#551a8b;
+  --rb-navlink:#2d6a4f; --rb-box:#f1f1ef; --rb-border:#cfcfcf;
+  --code-text:#c8ccd4; --accent-strong:#2b544c;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ background:#c6c6c6; }
+body{
+  max-width:760px; margin:24px auto 40px; padding:0;
+  background:#fff; border:1px solid #808080;
+  font-family:Verdana,Geneva,Tahoma,Arial,sans-serif;
+  font-size:12.5px; line-height:1.6; color:var(--rb-ink);
+  -webkit-font-smoothing:auto; text-rendering:auto;
+}
+
+/* ---- links ---- */
+a{ color:var(--rb-link); text-decoration:none; }
+a:visited{ color:var(--rb-link-v); }
+a:hover{ text-decoration:underline; }
+.page-content a{ text-decoration:underline; }
+::selection{ background:#2d6a4f; color:#fff; }
+
+/* ---- top chrome (from default.html) ---- */
+.rb-banner{
+  height:54px; position:relative; overflow:hidden;
+  background:var(--rb-green-dk);
+  background:linear-gradient(180deg,var(--rb-green-top) 0%,var(--rb-green) 42%,var(--rb-green-dk) 100%);
+  border-bottom:1px solid #163a2b;
+}
+.rb-logo, .rb-logo:link, .rb-logo:visited{
+  position:absolute; left:14px; top:12px; color:#fff;
+  font-family:Georgia,"Times New Roman",serif; font-style:italic;
+  font-size:24px; font-weight:bold; text-shadow:1px 1px 0 #163a2b;
+}
+.rb-logo:hover{ text-decoration:none; }
+.rb-logo span{ font-style:normal; color:#b8e0cf; }
+.rb-logo sup{ font-size:9px; font-style:normal; vertical-align:super; }
+.rb-tag{
+  position:absolute; left:16px; top:40px; color:#b8d4c6;
+  font-size:9px; letter-spacing:.04em;
+}
+.rb-bar{
+  background:#2b2b2b;
+  background:linear-gradient(180deg,#383838,#262626);
+  color:#f2f2f2; font-weight:bold; font-size:11px;
+  padding:4px 14px; border-bottom:1px solid #141414; text-shadow:1px 1px 0 #000;
+}
+.rb-nav{
+  background:#f2f3f1; border-bottom:1px solid #d7dad6;
+  padding:4px 14px; font-size:11px; color:#999;
+}
+.rb-nav a{ color:var(--rb-navlink); }
+
+/* ---- inner content padding (body itself is the framed column) ---- */
+.page-content{ max-width:none; margin:0; padding:12px; }
+
+/* ===== artifact-faithful home listings ===== */
+.msgbox{ background:var(--rb-box); border:1px solid var(--rb-border); padding:12px; margin:10px 0; }
+.msgbox.profile{ overflow:hidden; }
+.profile .name{ font-size:15px; font-weight:bold; }
+.profile .handle{ color:#555; font-weight:normal; }
+.profile-bio{ margin:6px 0; }
+.profile .links{ margin-top:6px; }
+.profile .links a{ margin:0; }
+.mugshot{ float:left; margin:0 12px 4px 0; background:#fff; border:1px solid #333; padding:3px; line-height:0; }
+.mugshot img{ display:block; width:82px; height:82px; object-fit:cover; }
+.blockhdr{ margin:18px 0 3px; font-weight:bold; font-size:12.5px; color:#000; }
+table.listing{ width:100%; border-collapse:collapse; margin:4px 0 2px; }
+table.listing th{ text-align:left; font-size:11px; color:#444; font-weight:bold; border-bottom:1px solid #bbb; padding:3px 8px 3px 0; }
+table.listing td{ padding:4px 8px 4px 0; vertical-align:top; border-bottom:1px dotted #cfcfcf; font-size:12px; }
+table.listing tr:hover td{ background:#eef3f0; }
+table.listing th:first-child, table.listing td:first-child{ padding-left:0; }
+td.date{ color:#555; white-space:nowrap; font-family:"Courier New",Consolas,monospace; }
+td.id{ font-family:"Courier New",Consolas,monospace; white-space:nowrap; }
+td.id a, td.subj a{ color:var(--rb-link); }
+.sev{ color:#a00000; font-weight:bold; font-size:11px; white-space:nowrap; }
+.tags span{ display:inline-block; border:1px solid #999; background:#f0f0f0; padding:2px 6px; margin:2px 3px 2px 0; font-size:11px; font-family:"Courier New",Consolas,monospace; }
+.all-posts{ margin:4px 0; font-size:11px; }
+
+/* ---- home hero -> profile box ---- */
+.hero{
+  background:var(--rb-box); border:1px solid var(--rb-border);
+  padding:12px; margin:0; overflow:hidden;
+}
+.hero-top{ display:block; }
+.hero-photo{
+  float:left; width:82px; height:82px; margin:0 12px 4px 0;
+  background:#fff; border:1px solid #333; padding:3px; border-radius:0;
+  object-fit:cover;
+}
+.hero-name{ font-family:inherit; font-size:14px; font-weight:bold; margin:0; line-height:1.2; }
+.hero-handle{ color:#555; margin:0 0 6px; font-size:11px; }
+.hero-tagline{ margin:0 0 4px; }
+.hero-bio{ margin:0 0 6px; }
+.hero-links{ list-style:none; padding:0; margin:0; }
+.hero-links li{ display:inline; margin-right:10px; }
+
+/* ---- section jump nav on home ---- */
+.site-nav{
+  margin:10px 0 0; padding:5px 0; font-size:11px;
+  border-top:1px solid #ddd; display:none; gap:0;
+}
+.site-nav a{ color:var(--rb-navlink); margin-right:12px; opacity:1; }
+.site-nav a:hover{ color:var(--rb-link-v); }
+
+/* ---- sections ---- */
+.section{ margin:16px 0 0; }
+.section-label{
+  font-family:"Courier New",Consolas,monospace; font-size:12px; font-weight:bold;
+  text-transform:lowercase; margin:0 0 4px; padding:2px 0;
+  border-bottom:1px solid #bbb; color:#000;
+}
+.section-label::before{ content:":: "; color:#2d6a4f; }
+.section-more{ margin:4px 0 0; font-size:11px; }
+
+/* ---- entry lists ---- */
+.entry-list{ list-style:none; margin:4px 0 0; padding:0; }
+.entry{
+  display:flex; gap:10px; padding:4px 0;
+  border-bottom:1px dotted #d2d2d2; align-items:flex-start;
+}
+.entry:hover{ background:#eef3f0; }
+.entry-meta{
+  flex:0 0 150px; font-family:"Courier New",Consolas,monospace; font-size:11px;
+  color:#555; display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+}
+.entry-id a{ color:var(--rb-link); }
+.entry-body{ flex:1 1 auto; min-width:0; }
+.entry-title{ font-weight:bold; }
+.entry-sub{ color:#555; margin-left:6px; }
+.entry-desc{ margin:2px 0 0; }
+.cve-logo,.job-logo,.project-logo,.edu-logo{ width:22px; height:22px; object-fit:contain; }
+.edu-cae{ color:var(--rb-link); }
+
+/* severity + tags */
+.tag{
+  display:inline-block; border:1px solid #999; background:#f0f0f0;
+  padding:1px 5px; margin:2px 3px 0 0; font-size:10px;
+  font-family:"Courier New",Consolas,monospace; color:#000; border-radius:0;
+}
+.tag:hover{ text-decoration:none; }
+.tag-critical{ color:#a00000; border-color:#a00000; }
+.tag-high{ color:#b35300; border-color:#b35300; }
+.tag-medium{ color:#6f6f00; }
+.tag-low{ color:#555; }
+
+/* badges + languages */
+.badge-list{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.badge-img{ height:34px; width:auto; }
+.lang-list{ display:flex; gap:10px; flex-wrap:wrap; }
+.lang-logo{ width:26px; height:26px; }
+
+/* ---- post lists (writing / archive / category) ---- */
+.post-list{ list-style:none; margin:4px 0 0; padding:0; }
+.post-list li{ padding:3px 0; border-bottom:1px dotted #d2d2d2; }
+.post-list li.post-year{ border:0; }
+.post-list li:hover{ background:#eef3f0; }
+.post-list li.post-year:hover{ background:none; }
+.post-year{ font-weight:bold; margin-top:10px; border-bottom:1px solid #bbb !important; }
+.post-date{ font-family:"Courier New",Consolas,monospace; color:#555; margin-right:10px; }
+.post-link{ color:var(--rb-link); }
+.category-description{ color:#555; margin:4px 0 8px; }
+
+/* ---- post page ---- */
+.post-nav,.page-nav{ margin:0 0 8px; font-size:11px; }
+.post-title,.page-title{
+  font-family:"Courier New",Consolas,monospace; font-size:16px; font-weight:bold;
+  margin:4px 0 2px; line-height:1.25;
+}
+.post-meta{ font-size:10px; color:#555; margin:0 0 10px; }
+.post-category{ margin-left:6px; font-family:"Courier New",Consolas,monospace; font-size:11px; color:var(--rb-navlink); }
+
+/* post body (rendered markdown) */
+.post article{ font-size:14px; line-height:1.72; }
+.post article p{ margin:0 0 10px; }
+.post article ul,.post article ol{ margin:0 0 10px; padding-left:22px; }
+.post article h2{
+  font-family:"Courier New",Consolas,monospace; font-size:13px; font-weight:bold;
+  margin:16px 0 6px; border-bottom:1px solid #ccc; padding-bottom:2px;
+}
+.post article h3{ font-family:"Courier New",Consolas,monospace; font-size:12px; margin:12px 0 4px; }
+.post article a{ color:var(--rb-link); }
+.header-anchor{ display:none; }
+
+/* code block styling is restored at the end of this file (CODE BLOCKS) */
+
+/* figures / screenshots: bordered image + italic caption */
+.post article figure{ margin:12px 0; }
+.post article figure img{
+  background:#fff; border:1px solid #333; padding:4px; max-width:100%; height:auto;
+  border-radius:0; cursor:zoom-in;
+}
+.post article figcaption{ font-size:10px; color:#555; font-style:italic; margin-top:4px; }
+
+/* tables in posts */
+.post article table{ border-collapse:collapse; font-size:11px; margin:10px 0; }
+.post article th,.post article td{ border:1px solid #bbb; padding:3px 7px; text-align:left; }
+.post article th{ background:#ececec; }
+
+/* ---- footer ---- */
+.site-footer{
+  margin:16px 0 0; padding:10px 16px;
+  border-top:1px solid #ddd; text-align:center; color:#777; font-size:10px;
+}
+.footer-icons{ display:flex; gap:14px; justify-content:center; }
+.footer-icons a{ color:#777; }
+.footer-icons a:hover{ color:#2d6a4f; }
+.footer-icons svg{ width:18px; height:18px; }
+
+/* lightbox (kept functional; not strictly period) */
+.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.8); display:none; z-index:50; }
+.lightbox.is-open{ display:flex; align-items:center; justify-content:center; }
+.lightbox img{ max-width:92%; max-height:92%; border:3px solid #fff; }
+
+/* ===================================================================
+   CODE BLOCKS — readable and on-palette. Light period boxes; terminal
+   steps get muted prompt/command/output coloring via code-enhance.js;
+   source code stays monochrome so nothing fights the retro palette.
+   =================================================================== */
+.highlighter-rouge, figure.highlight, div.highlight {
+  position: relative; margin: 1rem 0; padding: 0; background: transparent;
+}
+pre {
+  display:block; width:100%; box-sizing:border-box; margin:0;
+  padding:10px 12px; background:#efeee7; border:1px solid #d3d0c4; color:#1f1e1a;
+  font:12.5px/1.55 "JetBrains Mono", ui-monospace, "Courier New", monospace;
+  white-space:pre; overflow-x:auto; border-radius:0;
+}
+pre code { background:transparent; border:0; padding:0; color:inherit; font-size:inherit; }
+
+/* source code: monochrome so it never clashes; only comments dimmed */
+.highlight span { color:#1f1e1a; background:none; }
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs { color:#8a877c; font-style:italic; }
+
+/* terminal steps: readable, on-palette */
+.cli-prompt { color:#2d6a4f; font-weight:bold; }
+.cli-cmd    { color:#111;    font-weight:bold; }
+.cli-output { color:#6b6b63; }
+
+/* line-number gutter (code-enhance.js adds .code-block for source langs) */
+.code-block pre { display:flex; padding-left:0; }
+.code-block pre code { flex:none; }
+.code-lines {
+  position:static; flex:none; margin-right:12px; padding:0 10px 0 2px;
+  background:#e7e5db; border-right:1px solid #d3d0c4; color:#9a978b;
+  text-align:right; white-space:pre; -webkit-user-select:none; user-select:none;
+}
+
+/* copy button: quiet, matches the box */
+.code-copy {
+  position:absolute; top:6px; right:6px;
+  background:#e7e5db; border:1px solid #d3d0c4; color:#6b6b63;
+  border-radius:0; padding:4px; cursor:pointer; display:flex; align-items:center;
+  justify-content:center; opacity:0; transition:opacity .15s ease; z-index:1; line-height:1;
+}
+.highlighter-rouge:hover .code-copy { opacity:1; }
+.code-copy:hover { color:#2d6a4f; }
+.code-copy.copied { color:#2d6a4f; }
+
+/* inline code — green tint */
+.post article :not(pre) > code,
+.post article :not(pre) > code.highlighter-rouge {
+  background:rgba(45,106,79,0.09); color:var(--accent-strong); border:none;
+  border-radius:0; padding:0.08rem 0.35rem;
+  font-family:"JetBrains Mono", ui-monospace, "Courier New", monospace;
+  font-size:.85em; font-weight:500;
+}
+.post article pre code { background:transparent; color:inherit; padding:0; font-weight:400; font-size:inherit; }
+
+/* center standalone images, figures, and captions in posts */
+.post article img { display:block; max-width:100%; height:auto; margin:16px auto; }
+.post article figure { text-align:center; }
+.post article figcaption { text-align:center; }

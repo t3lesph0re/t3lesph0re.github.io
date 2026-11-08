@@ -17,6 +17,7 @@
       url: https://certs.zeropointsecurity.co.uk/553bd935-4ca1-4ae0-9fbf-092d2561efca
       post_title: "CRTL"
       badge: https://eu.api.accredible.com/v1/credentials/orx5xstz/artifact/badge
+    - name: CEH
     - name: eJPT
       badge: ejpt.svg
 
