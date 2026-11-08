@@ -247,13 +247,17 @@ pre {
 }
 pre code { background:transparent; border:0; padding:0; color:inherit; font-size:inherit; }
 
-/* source code: monochrome so it never clashes; only comments dimmed */
+/* source syntax highlighting -- muted + on-palette (olive strings, earthy keywords) */
 .highlight span { color:#1f1e1a; background:none; }
 .highlight .c, .highlight .c1, .highlight .cm, .highlight .cs { color:#8a877c; font-style:italic; }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .ow { color:#8a5a2b; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .dl { color:#4a6b3a; }
+.highlight .nf, .highlight .fm { color:#3a5f7a; }
+.highlight .err { color:#a33322; }
 
 /* terminal steps: readable, on-palette */
 .cli-prompt { color:#2d6a4f; font-weight:bold; }
-.cli-cmd    { color:#111;    font-weight:bold; }
+.cli-cmd    { color:#1a1a1a; font-weight:normal; }
 .cli-output { color:#6b6b63; }
 
 /* line-number gutter (code-enhance.js adds .code-block for source langs) */

