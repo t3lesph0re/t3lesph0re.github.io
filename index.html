@@ -70,9 +70,14 @@ layout: default
 </table>
 
 <div class="blockhdr" id="certifications">:: certifications</div>
-<div class="tags">
-  {% for group in site.data.certs %}{% for cert in group.items %}<span>{{ cert.name }}</span>{% endfor %}{% endfor %}
-</div>
+<ul class="entry-list">
+  {% for group in site.data.certs %}
+  <li class="entry">
+    <span class="entry-meta">{{ group.group }}</span>
+    <div class="entry-body"><div class="tags">{% for cert in group.items %}<span>{{ cert.name }}</span>{% endfor %}</div></div>
+  </li>
+  {% endfor %}
+</ul>
 
 {% if site.data.languages.size > 0 %}
 <div class="blockhdr" id="programming">:: programming</div>
