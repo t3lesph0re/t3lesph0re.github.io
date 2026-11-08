@@ -1,0 +1,11 @@
+{
+  "name": "t3lesph0re",
+  "short_name": "t3lesph0re",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#2d6a4f",
+  "background_color": "#f6f5f0",
+  "display": "browser"
+}
