@@ -314,3 +314,19 @@ pre code { background:transparent; border:0; padding:0; color:inherit; font-size
 .pgp-sig { margin-top:30px; border-top:1px solid #ddd; padding-top:14px; }
 .pgp-sig .pgp-meta { font-family:"Courier New",Consolas,monospace; font-size:11px; color:#6b6b63; margin-bottom:6px; }
 .pgp-sig .pgp-block { font-family:"Courier New",Consolas,monospace; font-size:10px; line-height:1.35; color:#6b6b63; background:#efeee7; border:1px solid #d3d0c4; padding:8px 10px; overflow:auto; white-space:pre; border-radius:0; }
+
+/* Section rune sigils -- centered beneath each section, smaller, black */
+.post-content .rune,
+.rune {
+  display: block;
+  text-align: center;
+  color: #1a1a1a;
+  font-family: "Noto Sans Runic", "Segoe UI Historic", "Segoe UI Symbol", "Apple Symbols", "Code2000", serif;
+  font-size: 16px;
+  line-height: 1;
+  margin: 26px 0;
+  user-select: none;
+}
+@media (max-width: 600px) {
+  .rune { font-size: 15px; margin: 22px 0; }
+}
