@@ -3,8 +3,71 @@ layout: default
 title: "AD CS abuse"
 ---
 
+<div class="blockhdr">PKI and X.509 -- how certificates work in Windows</div>
+
+<div style="padding:0 0 12px;font-size:12px;line-height:1.6">
+<dl>
+<dt style="font-family:'Courier New',monospace;font-size:10px;font-weight:bold;color:#555;margin:8px 0 1px"><span style="color:#2d6a4f">> </span>what is PKI</dt>
+<dd>Public Key Infrastructure is a system for issuing, distributing, and verifying digital certificates. A certificate binds a public key to an identity. A trusted third party (the Certificate Authority) signs the certificate, vouching that the key belongs to that identity. Anyone who trusts the CA can verify the certificate without contacting the CA again. The chain of trust runs: Root CA → (optional Subordinate CA) → End Entity certificate.</dd>
+
+<dt style="font-family:'Courier New',monospace;font-size:10px;font-weight:bold;color:#555;margin:8px 0 1px"><span style="color:#2d6a4f">> </span>what is X.509</dt>
+<dd>X.509 is the standard format for public key certificates, defined in <a href="https://www.rfc-editor.org/rfc/rfc5280" target="_blank" rel="noopener">RFC 5280</a>. Every TLS cert, code-signing cert, and AD authentication cert is X.509v3. The important fields:
+<pre style="font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;font-size:12px;line-height:1.5;background:#efeee7;border:1px solid #d3d0c4;color:#1f1e1a;padding:6px 8px;white-space:pre-wrap;word-break:break-all;margin:4px 0 6px;font-feature-settings:'liga' 0,'calt' 0">Subject        -- who this cert is for (DN: CN=user, OU=, DC=)
+Issuer         -- who signed it (the CA)
+Serial Number  -- unique ID from the CA
+Validity       -- Not Before / Not After
+Public Key     -- the subject's public key
+SAN            -- Subject Alternative Name: additional identities
+                  (UPN, DNS name, email) this cert is valid for
+Key Usage      -- what the key can do (signing, encryption)
+EKU            -- Extended Key Usage: what the cert is for
+                  (Client Auth, Server Auth, Code Signing)
+Signature      -- the CA's signature over all the above</pre></dd>
+
+<dt style="font-family:'Courier New',monospace;font-size:10px;font-weight:bold;color:#555;margin:8px 0 1px"><span style="color:#2d6a4f">> </span>how AD CS implements PKI in Windows</dt>
+<dd>Active Directory Certificate Services is Microsoft's enterprise PKI. It runs as a Windows Server role. The key components:
+<pre style="font-family:'JetBrains Mono',ui-monospace,'Courier New',monospace;font-size:12px;line-height:1.5;background:#efeee7;border:1px solid #d3d0c4;color:#1f1e1a;padding:6px 8px;white-space:pre-wrap;word-break:break-all;margin:4px 0 6px;font-feature-settings:'liga' 0,'calt' 0">Certificate Authority (CA)
+  Signs and issues certificates. Enterprise CAs are
+  integrated with AD and issue certs based on templates.
+  Standalone CAs are not AD-integrated.
+
+Certificate Templates
+  AD objects (pKICertificateTemplate) stored in
+  CN=Certificate Templates,CN=Public Key Services,
+  CN=Services,CN=Configuration. They define what a cert
+  can do: EKUs, key usage, who can enroll, whether the
+  requester supplies the subject name, validity period.
+  The CA reads the template at enrollment time.
+
+NTAuthCertificates
+  An AD object that lists which CAs are trusted for
+  AD authentication. A cert is only valid for domain
+  logon if its issuing CA is in NTAuthCertificates.
+
+Certificate Enrollment
+  Users/computers request certs via:
+  - RPC/DCOM (certreq, autoenrollment)
+  - HTTP (certsrv web enrollment, CES/CEP)
+  The CA checks the template, validates the request,
+  signs the cert, and returns it.
+
+PKINIT (RFC 4556)
+  Kerberos extension. A user authenticates to the KDC
+  with a certificate instead of a password. The KDC
+  validates the cert, checks the SAN for the UPN, verifies
+  the issuing CA is in NTAuthCertificates, and issues a TGT.
+  This is how a stolen or forged cert becomes domain access.</pre></dd>
+
+<dt style="font-family:'Courier New',monospace;font-size:10px;font-weight:bold;color:#555;margin:8px 0 1px"><span style="color:#2d6a4f">> </span>why AD CS is an attack surface</dt>
+<dd>Certificates are long-lived credentials (default 1 year). They survive password resets. If you can get a cert as a DA, you have persistent DA access for the cert's lifetime. AD CS misconfigurations let you request certs as other users (ESC1-3, ESC6), modify templates or PKI objects to create that condition (ESC4-5, ESC7), or relay authentication to get machine certs (ESC8). The ESC classification comes from SpecterOps' "Certified Pre-Owned" research by Will Schroeder and Lee Christensen (2021).</dd>
+
+<dt style="font-family:'Courier New',monospace;font-size:10px;font-weight:bold;color:#555;margin:8px 0 1px"><span style="color:#2d6a4f">> </span>references</dt>
+<dd>[ <a href="https://www.rfc-editor.org/rfc/rfc5280" target="_blank" rel="noopener">RFC 5280 -- X.509 PKI Certificate Profile</a> ] · [ <a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/active-directory-certificate-services-overview" target="_blank" rel="noopener">What is AD CS? (Microsoft)</a> ] · [ <a href="https://www.rfc-editor.org/rfc/rfc4556" target="_blank" rel="noopener">RFC 4556 -- PKINIT</a> ]</dd>
+</dl>
+</div>
+
 <div class="msgbox">
-Active Directory Certificate Services (AD CS) is Windows' built-in PKI. It issues X.509 certificates for authentication, encryption, and code signing. When misconfigured, it becomes a domain escalation and persistence mechanism. The ESC classification comes from SpecterOps' "Certified Pre-Owned" research by Will Schroeder and Lee Christensen (2021).
+The ESC attack classes below target specific misconfigurations in this infrastructure. Each one exploits a gap between what the template/CA allows and what should be allowed.
 </div>
 
 <div style="margin:0 0 8px;font-size:11px;color:#555">
