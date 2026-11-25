@@ -8,7 +8,7 @@ title: "AD CS abuse"
 <div style="padding:0 0 12px;font-size:12px;line-height:1.6">
 <dl>
 <dt style="font-family:'Courier New',monospace;font-size:10px;font-weight:bold;color:#555;margin:8px 0 1px"><span style="color:#2d6a4f">> </span>what is PKI</dt>
-<dd>Public Key Infrastructure is a system for issuing, distributing, and verifying digital certificates. A certificate binds a public key to an identity. A trusted third party (the Certificate Authority) signs the certificate, vouching that the key belongs to that identity. Anyone who trusts the CA can verify the certificate without contacting the CA again. The chain of trust runs: Root CA → (optional Subordinate CA) → End Entity certificate.</dd>
+<dd>Public Key Infrastructure is a system for issuing, distributing, and verifying digital certificates. A certificate binds a public key to an identity. A trusted third party (the Certificate Authority) signs the certificate, vouching that the key belongs to that identity. Anyone who trusts the CA can verify the certificate without contacting the CA again. The chain of trust runs: Root CA --> (optional Subordinate CA) --> End Entity certificate.</dd>
 
 <dt style="font-family:'Courier New',monospace;font-size:10px;font-weight:bold;color:#555;margin:8px 0 1px"><span style="color:#2d6a4f">> </span>what is X.509</dt>
 <dd>X.509 is the standard format for public key certificates, defined in <a href="https://www.rfc-editor.org/rfc/rfc5280" target="_blank" rel="noopener">RFC 5280</a>. Every TLS cert, code-signing cert, and AD authentication cert is X.509v3. The important fields:
