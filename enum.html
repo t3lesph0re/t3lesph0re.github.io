@@ -64,7 +64,7 @@ var fl=D.filter(function(c){if(c.g!==cat)return false;if(q){var s=[c.t,c.w,c.f,c
 var total=D.filter(function(c){return c.g===cat}).length;
 document.getElementById('stats').innerHTML='<b>'+fl.length+'</b>/'+total+' '+cats[cat];
 var h='<div class="blockhdr">'+cats[cat]+'</div>';
-h+='<table class="listing"><tr><th>technique</th><th>what</th></tr>';
+h+='<table class="listing"><tr><th>technique</th><th>desc</th></tr>';
 for(var i=0;i<fl.length;i++){var c=fl[i],uid=cat+'_'+i;
 h+='<tr style="cursor:pointer" onclick="var e=document.getElementById(\''+uid+'\');if(e.style.display===\'block\')e.style.display=\'none\';else e.style.display=\'block\'">';
 h+='<td class="id"><a>'+c.t+'</a></td><td>'+(c.d||c.w)+'</td></tr>';
